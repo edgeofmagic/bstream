@@ -22,9 +22,8 @@
  * THE SOFTWARE.
  */
 
-#include <logicmill/bstream/sink.h>
+#include <bstream/sink.h>
 
-using namespace logicmill;
 using namespace bstream;
 
 bstream::sink::sink(util::byte_type* data, util::size_type size, byte_order order)

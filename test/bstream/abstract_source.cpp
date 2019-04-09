@@ -25,16 +25,15 @@
 #include "common.h"
 #include "test_probes/base.h"
 #include <doctest.h>
-#include <logicmill/bstream/error.h>
-#include <logicmill/bstream/sink.h>
-#include <logicmill/bstream/source.h>
+#include <bstream/error.h>
+#include <bstream/sink.h>
+#include <bstream/source.h>
 #include <util/buffer.h>
 
-using namespace logicmill;
 using namespace bstream;
 
 
-TEST_CASE("logicmill::bstream::sink [ smoke ] { basic functionality }")
+TEST_CASE("bstream::sink [ smoke ] { basic functionality }")
 {
 	util::byte_type buf[] = {
 			0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f,
@@ -160,7 +159,7 @@ TEST_CASE("logicmill::bstream::sink [ smoke ] { basic functionality }")
 	CHECK(MATCH_MEMORY(buf, expected_3));
 }
 
-TEST_CASE("logicmill::bstream::source [ smoke ] { basic functionality }")
+TEST_CASE("bstream::source [ smoke ] { basic functionality }")
 {
 	util::byte_type buf[] = {
 			0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f,

@@ -22,9 +22,8 @@
  * THE SOFTWARE.
  */
 
-#include <logicmill/bstream/buffer/sink.h>
+#include <bstream/buffer/sink.h>
 
-using namespace logicmill;
 using namespace bstream;
 
 void

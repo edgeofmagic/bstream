@@ -22,10 +22,9 @@
  * THE SOFTWARE.
  */
 
-#include <logicmill/bstream/ibstream.h>
-#include <logicmill/bstream/obstream.h>
+#include <bstream/ibstream.h>
+#include <bstream/obstream.h>
 
-using namespace logicmill;
 using namespace bstream;
 
 util::const_buffer

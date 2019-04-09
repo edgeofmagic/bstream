@@ -22,10 +22,9 @@
  * THE SOFTWARE.
  */
 
-#include <logicmill/bstream/error.h>
-#include <logicmill/bstream/source.h>
+#include <bstream/error.h>
+#include <bstream/source.h>
 
-using namespace logicmill;
 using namespace bstream;
 
 util::position_type

@@ -22,16 +22,15 @@
  * THE SOFTWARE.
  */
 
-#ifndef LOGICMILL_TEST_BSTREAM_TEST_PROBES_BUFSEQ_H
-#define LOGICMILL_TEST_BSTREAM_TEST_PROBES_BUFSEQ_H
+#ifndef TEST_BSTREAM_TEST_PROBES_BUFSEQ_H
+#define TEST_BSTREAM_TEST_PROBES_BUFSEQ_H
 
 #include "base.h"
-#include <logicmill/bstream/bufseq/sink.h>
-#include <logicmill/bstream/bufseq/source.h>
+#include <bstream/bufseq/sink.h>
+#include <bstream/bufseq/source.h>
 
 
-namespace logicmill
-{
+
 namespace bstream
 {
 namespace bufseq
@@ -81,6 +80,5 @@ private:
 }    // namespace detail
 }    // namespace bufseq
 }    // namespace bstream
-}    // namespace logicmill
 
-#endif    // LOGICMILL_TEST_BSTREAM_TEST_PROBES_BUFSEQ_H
+#endif    // TEST_BSTREAM_TEST_PROBES_BUFSEQ_H

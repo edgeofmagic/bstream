@@ -22,12 +22,11 @@
  * THE SOFTWARE.
  */
 
-#include <logicmill/bstream/error.h>
-#include <logicmill/bstream/error_category_context.h>
+#include <bstream/error.h>
+#include <bstream/error_category_context.h>
 
 #include <iostream>
 
-using namespace logicmill;
 using namespace bstream;
 
 error_category_context::error_category_context(category_vector&& categories) : m_category_vector{std::move(categories)}

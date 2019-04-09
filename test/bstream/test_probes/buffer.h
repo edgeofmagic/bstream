@@ -22,16 +22,15 @@
  * THE SOFTWARE.
  */
 
-#ifndef LOGICMILL_TEST_BSTREAM_TEST_PROBES_MEMORY_H
-#define LOGICMILL_TEST_BSTREAM_TEST_PROBES_MEMORY_H
+#ifndef TEST_BSTREAM_TEST_PROBES_MEMORY_H
+#define TEST_BSTREAM_TEST_PROBES_MEMORY_H
 
 #include "base.h"
-#include <logicmill/bstream/buffer/sink.h>
-#include <logicmill/bstream/buffer/source.h>
+#include <bstream/buffer/sink.h>
+#include <bstream/buffer/source.h>
 
 
-namespace logicmill
-{
+
 namespace bstream
 {
 namespace buffer
@@ -75,6 +74,5 @@ private:
 }    // namespace detail
 }    // namespace buffer
 }    // namespace bstream
-}    // namespace logicmill
 
-#endif    // LOGICMILL_TEST_BSTREAM_TEST_PROBES_MEMORY_H
+#endif    // TEST_BSTREAM_TEST_PROBES_MEMORY_H

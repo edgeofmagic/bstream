@@ -26,14 +26,13 @@
 #include "common.h"
 #include <doctest.h>
 #include <experimental/filesystem>
-#include <logicmill/bstream/error.h>
+#include <bstream/error.h>
 
-using namespace logicmill;
 using namespace bstream;
 
 namespace fs = std::experimental::filesystem;
 
-TEST_CASE("logicmill::bstream::file::source [ smoke ] { source seek read }")
+TEST_CASE("bstream::file::source [ smoke ] { source seek read }")
 {
 	util::byte_type data[] = {
 			0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f,
@@ -92,7 +91,7 @@ TEST_CASE("logicmill::bstream::file::source [ smoke ] { source seek read }")
 }
 
 
-TEST_CASE("logicmill::bstream::file::sink [ smoke ] { sink seek write }")
+TEST_CASE("bstream::file::sink [ smoke ] { sink seek write }")
 {
 	util::byte_type data[] = {
 			0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f,

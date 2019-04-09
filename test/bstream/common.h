@@ -22,8 +22,8 @@
  * THE SOFTWARE.
  */
 
-#ifndef LOGICMILL_TEST_BSTREAM_COMMON_H
-#define LOGICMILL_TEST_BSTREAM_COMMON_H
+#ifndef TEST_BSTREAM_COMMON_H
+#define TEST_BSTREAM_COMMON_H
 
 #define MATCH_MEMORY( _actual_, _expected_ )										\
 	( ::memcmp( ( _actual_ ), ( _expected_ ), sizeof( _actual_ ) ) == 0 )			\
@@ -37,4 +37,4 @@
 	( ::memcmp( ( _actual_ ).data(), ( _expected_ ), ( _actual_ ).size() ) == 0	)	\
 /**/
 
-#endif    // LOGICMILL_TEST_BSTREAM_COMMON_H
+#endif    // TEST_BSTREAM_COMMON_H

@@ -23,10 +23,9 @@
  */
 
 #include <fcntl.h>
-#include <logicmill/bstream/file/sink.h>
+#include <bstream/file/sink.h>
 #include <unistd.h>
 
-using namespace logicmill;
 using namespace bstream;
 
 file::sink::sink(sink&& rhs)

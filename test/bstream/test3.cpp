@@ -23,13 +23,12 @@
  */
 
 #include <doctest.h>
-#include <logicmill/bstream.h>
-#include <logicmill/bstream/ombstream.h>
-#include <logicmill/bstream/imbstream.h>
+#include <bstream.h>
+#include <bstream/ombstream.h>
+#include <bstream/imbstream.h>
 #include <thread>
 #include <chrono>
 
-using namespace logicmill;
 
 namespace test_types_3
 {
@@ -91,7 +90,7 @@ using namespace test_types_3;
 
 #if 0
 
-TEST_CASE( "logicmill/smoke/bstream/poly_shared_ptrs_no_erasure" )
+TEST_CASE( "smoke/bstream/poly_shared_ptrs_no_erasure" )
 {
 //	std::this_thread::sleep_for ( std::chrono::seconds( 10 ) );
 
@@ -104,7 +103,7 @@ TEST_CASE( "logicmill/smoke/bstream/poly_shared_ptrs_no_erasure" )
 	CHECK( foop_cast );
 }
 
-TEST_CASE( "logicmill/smoke/bstream/poly_shared_ptrs_erasure" )
+TEST_CASE( "smoke/bstream/poly_shared_ptrs_erasure" )
 {
 //	std::this_thread::sleep_for ( std::chrono::seconds( 10 ) );
 
@@ -121,7 +120,7 @@ TEST_CASE( "logicmill/smoke/bstream/poly_shared_ptrs_erasure" )
 	CHECK( foop_dcast ); 
 }
 
-TEST_CASE( "logicmill/smoke/bstream/poly_shared_ptrs_half_erasure" )
+TEST_CASE( "smoke/bstream/poly_shared_ptrs_half_erasure" )
 {
 //	std::this_thread::sleep_for ( std::chrono::seconds( 10 ) );
 
@@ -145,7 +144,7 @@ TEST_CASE( "logicmill/smoke/bstream/poly_shared_ptrs_half_erasure" )
 	}
 }
 
-TEST_CASE( "logicmill/smoke/bstream/poly_shared_ptrs_factory_func" )
+TEST_CASE( "smoke/bstream/poly_shared_ptrs_factory_func" )
 {
 //	std::this_thread::sleep_for ( std::chrono::seconds( 10 ) );
 
@@ -165,7 +164,7 @@ TEST_CASE( "logicmill/smoke/bstream/poly_shared_ptrs_factory_func" )
 
 
 
-TEST_CASE( "logicmill/smoke/bstream/poly_raw_ptrs_no_erasure" )
+TEST_CASE( "smoke/bstream/poly_raw_ptrs_no_erasure" )
 {
 //	std::this_thread::sleep_for ( std::chrono::seconds( 10 ) );
 
@@ -180,7 +179,7 @@ TEST_CASE( "logicmill/smoke/bstream/poly_raw_ptrs_no_erasure" )
 	CHECK( raw_foop_dcast ); 
 }
 
-TEST_CASE( "logicmill/smoke/bstream/poly_raw_ptrs_erasure" )
+TEST_CASE( "smoke/bstream/poly_raw_ptrs_erasure" )
 {
 //	std::this_thread::sleep_for ( std::chrono::seconds( 10 ) );
 
@@ -199,7 +198,7 @@ TEST_CASE( "logicmill/smoke/bstream/poly_raw_ptrs_erasure" )
 
 #endif
 
-TEST_CASE( "logicmill/smoke/bstream/poly_raw_ptrs_half_erasure" )
+TEST_CASE( "smoke/bstream/poly_raw_ptrs_half_erasure" )
 {
 //	std::this_thread::sleep_for ( std::chrono::seconds( 10 ) );
 
@@ -226,7 +225,7 @@ TEST_CASE( "logicmill/smoke/bstream/poly_raw_ptrs_half_erasure" )
 }
 
 
-TEST_CASE( "logicmill/smoke/bstream/poly_shared_ptrs" )
+TEST_CASE( "smoke/bstream/poly_shared_ptrs" )
 {
 	bstream::context<foo, far> stream_context;
 	
@@ -261,7 +260,7 @@ TEST_CASE( "logicmill/smoke/bstream/poly_shared_ptrs" )
 	// CHECK( foop0->real() == foop1->real() );
 }
 
-TEST_CASE( "logicmill/smoke/bstream/poly_unique_ptrs" )
+TEST_CASE( "smoke/bstream/poly_unique_ptrs" )
 {
 	bstream::context<foo, far> stream_context;
 

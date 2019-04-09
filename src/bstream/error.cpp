@@ -22,9 +22,8 @@
  * THE SOFTWARE.
  */
 
-#include <logicmill/bstream/error.h>
+#include <bstream/error.h>
 
-using namespace logicmill;
 
 class bstream_category_impl : public std::error_category
 {

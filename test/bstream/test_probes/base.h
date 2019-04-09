@@ -22,14 +22,13 @@
  * THE SOFTWARE.
  */
 
-#ifndef LOGICMILL_TEST_BSTREAM_TEST_PROBES_BASE_H
-#define LOGICMILL_TEST_BSTREAM_TEST_PROBES_BASE_H
+#ifndef TEST_BSTREAM_TEST_PROBES_BASE_H
+#define TEST_BSTREAM_TEST_PROBES_BASE_H
 
-#include <logicmill/bstream/sink.h>
-#include <logicmill/bstream/source.h>
+#include <bstream/sink.h>
+#include <bstream/source.h>
 
-namespace logicmill
-{
+
 namespace bstream
 {
 
@@ -152,6 +151,5 @@ private:
 
 }    // namespace detail
 }    // namespace bstream
-}    // namespace logicmill
 
-#endif    // LOGICMILL_TEST_BSTREAM_TEST_PROBES_BASE_H
+#endif    // TEST_BSTREAM_TEST_PROBES_BASE_H

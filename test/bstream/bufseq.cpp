@@ -25,13 +25,12 @@
 #include "test_probes/bufseq.h"
 #include "common.h"
 #include <doctest.h>
-#include <logicmill/bstream/error.h>
+#include <bstream/error.h>
 #include <util/buffer.h>
 
-using namespace logicmill;
 using namespace bstream;
 
-TEST_CASE("logicmill::bstream::bufseq::sink [ smoke ] { expanding buffer }")
+TEST_CASE("bstream::bufseq::sink [ smoke ] { expanding buffer }")
 {
 	util::byte_type data[] = {
 			0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
@@ -108,7 +107,7 @@ TEST_CASE("logicmill::bstream::bufseq::sink [ smoke ] { expanding buffer }")
 	// std::cout << "capacity is " << probe.buffer().capacity() << std::endl;
 }
 
-TEST_CASE("logicmill::bstream::bufseq::sink [ smoke ] { expanding buffer with seek }")
+TEST_CASE("bstream::bufseq::sink [ smoke ] { expanding buffer with seek }")
 {
 	util::byte_type data[] = {
 			0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
@@ -170,7 +169,7 @@ TEST_CASE("logicmill::bstream::bufseq::sink [ smoke ] { expanding buffer with se
 	// std::cout << "capacity is " << probe.buffer().capacity() << std::endl;
 }
 
-TEST_CASE("logicmill::bstream::bufseq::source [ smoke ] { basic util::const_buffer }")
+TEST_CASE("bstream::bufseq::source [ smoke ] { basic util::const_buffer }")
 {
 	util::byte_type data_0[] = {
 			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -272,7 +271,7 @@ TEST_CASE("logicmill::bstream::bufseq::source [ smoke ] { basic util::const_buff
 	CHECK(probe.current_segment() == 1);
 }
 
-TEST_CASE("logicmill::bstream::bufseq::source [ smoke ] { basic shared_buffer }")
+TEST_CASE("bstream::bufseq::source [ smoke ] { basic shared_buffer }")
 {
 	util::byte_type data_0[] = {
 			0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,

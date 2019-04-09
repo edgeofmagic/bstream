@@ -23,14 +23,13 @@
  */
 
 #include <doctest.h>
-#include <logicmill/bstream.h>
-#include <logicmill/bstream/ombstream.h>
-#include <logicmill/bstream/imbstream.h>
+#include <bstream.h>
+#include <bstream/ombstream.h>
+#include <bstream/imbstream.h>
 #include <thread>
 #include <chrono>
 
 
-using namespace logicmill;
 
 namespace test_types_1
 {
@@ -135,7 +134,7 @@ using namespace test_types_1;
 
 BSTRM_SERIALIZE_DEF( , foz, , ( name_, number_ ) )
 
-TEST_CASE( "logicmill/smoke/bstream/array_base_macro" )
+TEST_CASE( "smoke/bstream/array_base_macro" )
 {
 	bstream::ombstream os{ 1024 };
 	foo f0( "france is bacon", 27 );
@@ -148,7 +147,7 @@ TEST_CASE( "logicmill/smoke/bstream/array_base_macro" )
 	CHECK( f1.number() == f0.number() );
 }
 
-TEST_CASE( "logicmill/smoke/bstream/map_base_macro" )
+TEST_CASE( "smoke/bstream/map_base_macro" )
 {
 	CHECK( ! bstream::has_deserialize_method< far >::value );
 
@@ -164,7 +163,7 @@ TEST_CASE( "logicmill/smoke/bstream/map_base_macro" )
 
 }
 
-TEST_CASE( "logicmill/smoke/bstream/external_serialize_def" )
+TEST_CASE( "smoke/bstream/external_serialize_def" )
 {
 //	std::this_thread::sleep_for ( std::chrono::seconds( 10 ) );
 	bstream::ombstream os{ 1024 };

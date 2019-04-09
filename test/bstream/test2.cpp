@@ -23,12 +23,11 @@
  */
 
 #include <doctest.h>
-#include <logicmill/bstream.h>
-#include <logicmill/bstream/ombstream.h>
-#include <logicmill/bstream/imbstream.h>
-// #include <logicmill/bstream/msgpack.h>
+#include <bstream.h>
+#include <bstream/ombstream.h>
+#include <bstream/imbstream.h>
+// #include <bstream/msgpack.h>
 
-using namespace logicmill;
 
 namespace test_types_2
 {
@@ -166,7 +165,7 @@ BSTRM_HAS_MSGPACK_AS_ADAPTOR( test_types_2::foe );
 
 using namespace test_types_2;
 
-TEST_CASE( "logicmill/smoke/bstream/msgpack_integration" )
+TEST_CASE( "smoke/bstream/msgpack_integration" )
 {
 	CHECK( bstream::is_msgpack_object_constructible< fee >::value );
 	CHECK( bstream::has_msgpack_unpack_method< fee >::value );

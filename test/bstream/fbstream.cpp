@@ -23,10 +23,9 @@
  */
 
 #include <doctest.h>
-#include <logicmill/bstream/ifbstream.h>
-#include <logicmill/bstream/ofbstream.h>
+#include <bstream/ifbstream.h>
+#include <bstream/ofbstream.h>
 
-using namespace logicmill;
 using namespace bstream;
 using bstream::ofbstream;
 
@@ -39,7 +38,7 @@ using bstream::ofbstream;
 	}                                                                                                                  \
 	/**/
 
-TEST_CASE("logicmill/smoke/bstream/fbstream/write_read")
+TEST_CASE("smoke/bstream/fbstream/write_read")
 {
 	bstream::ofbstream os("fbstream_test_file", bstream::open_mode::truncate);
 	// util::mutable_buffer outbuf{ "abcdefghijklmnop" };
@@ -54,7 +53,7 @@ TEST_CASE("logicmill/smoke/bstream/fbstream/write_read")
 	CHECK(outbuf == inbuf);
 }
 
-TEST_CASE("logicmill/smoke/bstream/fbstream/write_read_ate")
+TEST_CASE("smoke/bstream/fbstream/write_read_ate")
 {
 	{
 		bstream::ofbstream os("fbstream_test_file", bstream::open_mode::truncate);

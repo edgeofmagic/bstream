@@ -23,10 +23,9 @@
  */
 
 #include <fcntl.h>
-#include <logicmill/bstream/file/source.h>
+#include <bstream/file/source.h>
 #include <unistd.h>
 
-using namespace logicmill;
 using namespace bstream;
 
 file::source::source(util::size_type buffer_size, byte_order order)

@@ -23,15 +23,14 @@
  */
 
 #include <doctest.h>
-#include <logicmill/bstream.h>
-// #include <logicmill/bstream/msgpack.h>
-#include <logicmill/bstream/ombstream.h>
-#include <logicmill/bstream/imbstream.h>
-#include <logicmill/bstream/stdlib.h>
+#include <bstream.h>
+// #include <bstream/msgpack.h>
+#include <bstream/ombstream.h>
+#include <bstream/imbstream.h>
+#include <bstream/stdlib.h>
 #include <thread>
 #include <chrono>
 
-using namespace logicmill;
 
 namespace test_types_0
 {
@@ -313,7 +312,7 @@ namespace test_types_0
 		foo() {}
 //		virtual ~foo() {}
 
-//		friend struct logicmill::bstream::base_serializer< foo, fee >;
+//		friend struct bstream::base_serializer< foo, fee >;
     	template< class _U, class _V, class _E > friend struct base_serialize;
 
 		foo( fee const& a, fie const& b, foe const& c, fum const& d, std::string const& l ) :
@@ -688,7 +687,7 @@ namespace test_types_0
 }													\
 /**/
 
-TEST_CASE( "logicmill/smoke/bstream/numeric_representation" )
+TEST_CASE( "smoke/bstream/numeric_representation" )
 {
 //	std::this_thread::sleep_for ( std::chrono::seconds( 10 ) );
 
@@ -910,7 +909,7 @@ TEST_CASE( "logicmill/smoke/bstream/numeric_representation" )
 }													\
 /**/
 
-TEST_CASE( "logicmill/smoke/bstream/numeric_write_read" )
+TEST_CASE( "smoke/bstream/numeric_write_read" )
 {
 	WRITE_READ_TEST( std::int8_t, 0 );
 	WRITE_READ_TEST( std::uint8_t, 0 );
@@ -1080,7 +1079,7 @@ bool same_contents( std::unordered_map< K, V > const& a, std::unordered_map< K, 
 	return true;
 }
 
-TEST_CASE( "logicmill/smoke/bstream/unordered_map" )
+TEST_CASE( "smoke/bstream/unordered_map" )
 {
 	{
 		std::unordered_map< test_types_0::fee, test_types_0::fee > map0;
@@ -1290,7 +1289,7 @@ bool same_contents( std::map< K, V > const& a, std::map< K, V > const& b )
 	return true;
 }
 
-TEST_CASE( "logicmill/smoke/bstream/map" )
+TEST_CASE( "smoke/bstream/map" )
 {
 	{
 		std::map< test_types_0::fee, test_types_0::fee > map0;
@@ -1479,7 +1478,7 @@ TEST_CASE( "logicmill/smoke/bstream/map" )
 	}
 }
 
-TEST_CASE( "logicmill/smoke/bstream/vector" )
+TEST_CASE( "smoke/bstream/vector" )
 {
 	{
 		std::vector< test_types_0::fee > vec0 = { {"silly", 0 }, { "sully", 1 }, { "sally", 2 }, { "solly", 3 }};
@@ -1531,7 +1530,7 @@ TEST_CASE( "logicmill/smoke/bstream/vector" )
 	}
 }
 
-TEST_CASE( "logicmill/smoke/bstream/deque" )
+TEST_CASE( "smoke/bstream/deque" )
 {
 	{
 		std::deque< test_types_0::fee > deq0 = { {"silly", 0 }, { "sully", 1 }, { "sally", 2 }, { "solly", 3 }};
@@ -1583,7 +1582,7 @@ TEST_CASE( "logicmill/smoke/bstream/deque" )
 	}
 }
 
-TEST_CASE( "logicmill/smoke/bstream/forward_list" )
+TEST_CASE( "smoke/bstream/forward_list" )
 {
 	{
 		std::forward_list< test_types_0::fee > obj0 = { {"silly", 0 }, { "sully", 1 }, { "sally", 2 }, { "solly", 3 }};
@@ -1635,7 +1634,7 @@ TEST_CASE( "logicmill/smoke/bstream/forward_list" )
 	}
 }
 
-TEST_CASE( "logicmill/smoke/bstream/list" )
+TEST_CASE( "smoke/bstream/list" )
 {
 	{
 		std::list< test_types_0::fee > obj0 = { {"silly", 0 }, { "sully", 1 }, { "sally", 2 }, { "solly", 3 }};
@@ -1687,7 +1686,7 @@ TEST_CASE( "logicmill/smoke/bstream/list" )
 	}
 }
 
-TEST_CASE( "logicmill/smoke/bstream/set" )
+TEST_CASE( "smoke/bstream/set" )
 {
 	{
 		std::set< test_types_0::fee > obj0 = { {"silly", 0 }, { "sully", 1 }, { "sally", 2 }, { "solly", 3 }};
@@ -1739,7 +1738,7 @@ TEST_CASE( "logicmill/smoke/bstream/set" )
 	}
 }
 
-TEST_CASE( "logicmill/smoke/bstream/unordered_set" )
+TEST_CASE( "smoke/bstream/unordered_set" )
 {
 	{
 		std::unordered_set< test_types_0::fee > obj0 = { {"silly", 0 }, { "sully", 1 }, { "sally", 2 }, { "solly", 3 }};
@@ -1791,7 +1790,7 @@ TEST_CASE( "logicmill/smoke/bstream/unordered_set" )
 	}
 }
 
-TEST_CASE( "logicmill/smoke/bstream/tuple" )
+TEST_CASE( "smoke/bstream/tuple" )
 {
 	{
 		using tup_type = std::tuple< test_types_0::fee, test_types_0::fie, test_types_0::foe, test_types_0::fum >;
@@ -1815,7 +1814,7 @@ TEST_CASE( "logicmill/smoke/bstream/tuple" )
 	}
 }
 
-TEST_CASE( "logicmill/smoke/bstream/class_write_read" )
+TEST_CASE( "smoke/bstream/class_write_read" )
 {
 	// std::this_thread::sleep_for ( std::chrono::seconds( 10 ) );
 
@@ -2112,7 +2111,7 @@ struct bstream::ref_deserializer< test_types_0::fox >
 	}
 };
 
-TEST_CASE( "logicmill/smoke/bstream/ptr" )
+TEST_CASE( "smoke/bstream/ptr" )
 {
 	{
 		bstream::ombstream os{ 1024 };
@@ -2228,7 +2227,7 @@ TEST_CASE( "logicmill/smoke/bstream/ptr" )
 	}
 }
 
-TEST_CASE( "logicmill/smoke/bstream/initializer" )
+TEST_CASE( "smoke/bstream/initializer" )
 {
 	{
 		/*
@@ -2266,7 +2265,7 @@ TEST_CASE( "logicmill/smoke/bstream/initializer" )
 	}
 }
 
-TEST_CASE( "logicmill/smoke/bstream/pair" )
+TEST_CASE( "smoke/bstream/pair" )
 {
 	{
 		bstream::ombstream os{ 1024 };

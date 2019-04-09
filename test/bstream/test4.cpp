@@ -23,16 +23,14 @@
  */
 
 #include <doctest.h>
-#include <logicmill/bstream.h>
-#include <logicmill/bstream/ombstream.h>
-#include <logicmill/bstream/imbstream.h>
-#include <logicmill/bstream/stdlib.h>
+#include <bstream.h>
+#include <bstream/ombstream.h>
+#include <bstream/imbstream.h>
+#include <bstream/stdlib.h>
 #include <utility>
 #include <thread>
 #include <chrono>
 
-
-using namespace logicmill;
 
 namespace test_4
 {
@@ -85,7 +83,7 @@ struct bstream::ref_deserializer< test_4::struct_A >
 
 using namespace test_4;
 
-TEST_CASE( "logicmill/smoke/bstream/composite_types/0" )
+TEST_CASE( "smoke/bstream/composite_types/0" )
 {
 //	std::this_thread::sleep_for ( std::chrono::seconds( 10 ) );
 

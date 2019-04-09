@@ -22,9 +22,8 @@
  * THE SOFTWARE.
  */
 
-#include <logicmill/bstream/obstream.h>
+#include <bstream/obstream.h>
 
-using namespace logicmill;
 using namespace bstream;
 
 obstream&
