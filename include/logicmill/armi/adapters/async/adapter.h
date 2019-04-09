@@ -35,7 +35,7 @@
 #include <logicmill/armi/client_proxy.h>
 #include <logicmill/async/channel.h>
 #include <logicmill/async/loop.h>
-#include <logicmill/util/promise.h>
+#include <util/promise.h>
 
 namespace logicmill
 {

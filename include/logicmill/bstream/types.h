@@ -29,7 +29,7 @@
 #include <boost/endian/conversion.hpp>
 #include <cstdint>
 #include <limits>
-#include <logicmill/types.h>
+#include <util/types.h>
 #include <system_error>
 
 namespace logicmill

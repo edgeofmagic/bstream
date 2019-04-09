@@ -27,7 +27,7 @@
 
 #include <logicmill/bstream/source.h>
 #include <logicmill/bstream/types.h>
-#include <logicmill/util/buffer.h>
+#include <util/buffer.h>
 
 namespace logicmill
 {
@@ -97,32 +97,32 @@ public:
 	}
 
 	virtual util::shared_buffer
-	get_shared_slice(size_type n, std::error_code& err) override;
+	get_shared_slice(util::size_type n, std::error_code& err) override;
 
 	virtual util::shared_buffer
-	get_shared_slice(size_type n) override;
+	get_shared_slice(util::size_type n) override;
 
 	virtual util::const_buffer
-	get_slice(size_type n, std::error_code& err) override;
+	get_slice(util::size_type n, std::error_code& err) override;
 
 	virtual util::const_buffer
-	get_slice(size_type n) override;
+	get_slice(util::size_type n) override;
 
-	virtual size_type
+	virtual util::size_type
 	really_get_size() const override
 	{
 		return m_buf.size();
 	}
 
-	virtual position_type
-	really_seek(position_type pos, std::error_code& err) override
+	virtual util::position_type
+	really_seek(util::position_type pos, std::error_code& err) override
 	{
 		err.clear();
 		m_next = m_base + pos;
 		return pos;
 	}
 
-	virtual position_type
+	virtual util::position_type
 	really_get_position() const override
 	{
 		return gpos();
@@ -164,7 +164,7 @@ inline source<util::shared_buffer>::source(util::shared_buffer&& buf, bstream::b
 
 template<>
 inline util::shared_buffer
-source<util::const_buffer>::get_shared_slice(size_type n, std::error_code& err)
+source<util::const_buffer>::get_shared_slice(util::size_type n, std::error_code& err)
 {
 	util::shared_buffer result{m_buf, gpos(), n, err};
 	if (!err)
@@ -176,7 +176,7 @@ source<util::const_buffer>::get_shared_slice(size_type n, std::error_code& err)
 
 template<>
 inline util::shared_buffer
-source<util::const_buffer>::get_shared_slice(size_type n)
+source<util::const_buffer>::get_shared_slice(util::size_type n)
 {
 	util::shared_buffer result{m_buf, gpos(), n};
 	gbump(n);
@@ -185,7 +185,7 @@ source<util::const_buffer>::get_shared_slice(size_type n)
 
 template<>
 inline util::shared_buffer
-source<util::shared_buffer>::get_shared_slice(size_type n, std::error_code& err)
+source<util::shared_buffer>::get_shared_slice(util::size_type n, std::error_code& err)
 {
 	util::shared_buffer result{m_buf, gpos(), n, err};
 	if (!err)
@@ -197,7 +197,7 @@ source<util::shared_buffer>::get_shared_slice(size_type n, std::error_code& err)
 
 template<>
 inline util::shared_buffer
-source<util::shared_buffer>::get_shared_slice(size_type n)
+source<util::shared_buffer>::get_shared_slice(util::size_type n)
 {
 	util::shared_buffer result{m_buf, gpos(), n};
 	gbump(n);
@@ -206,7 +206,7 @@ source<util::shared_buffer>::get_shared_slice(size_type n)
 
 template<>
 inline util::const_buffer
-source<util::const_buffer>::get_slice(size_type n, std::error_code& err)
+source<util::const_buffer>::get_slice(util::size_type n, std::error_code& err)
 {
 	util::const_buffer result{m_buf, gpos(), n, err};
 	if (!err)
@@ -218,7 +218,7 @@ source<util::const_buffer>::get_slice(size_type n, std::error_code& err)
 
 template<>
 inline util::const_buffer
-source<util::const_buffer>::get_slice(size_type n)
+source<util::const_buffer>::get_slice(util::size_type n)
 {
 	util::const_buffer result{m_buf, gpos(), n};
 	gbump(n);
@@ -227,7 +227,7 @@ source<util::const_buffer>::get_slice(size_type n)
 
 template<>
 inline util::const_buffer
-source<util::shared_buffer>::get_slice(size_type n, std::error_code& err)
+source<util::shared_buffer>::get_slice(util::size_type n, std::error_code& err)
 {
 	util::const_buffer result{m_buf, gpos(), n, err};
 	if (!err)
@@ -239,7 +239,7 @@ source<util::shared_buffer>::get_slice(size_type n, std::error_code& err)
 
 template<>
 inline util::const_buffer
-source<util::shared_buffer>::get_slice(size_type n)
+source<util::shared_buffer>::get_slice(util::size_type n)
 {
 	util::const_buffer result{m_buf, gpos(), n};
 	gbump(n);

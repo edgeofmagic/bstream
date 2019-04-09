@@ -25,7 +25,7 @@
 #include <doctest.h>
 #include <iostream>
 #include <logicmill/async/loop.h>
-#include <logicmill/util/buffer.h>
+#include <util/buffer.h>
 
 #define END_LOOP(loop_ptr, delay_ms)                                                                                   \
 	{                                                                                                                  \
@@ -170,7 +170,7 @@ TEST_CASE("logicmill::async::udp [ smoke ] { max datagram size }")
 	bool send_timer_did_execute{false};
 
 	util::mutable_buffer big{async::transceiver::payload_size_limit};
-	big.fill(static_cast<byte_type>('Z'));
+	big.fill(static_cast<util::byte_type>('Z'));
 	big.size(async::transceiver::payload_size_limit);
 
 	std::error_code err;
@@ -193,7 +193,7 @@ TEST_CASE("logicmill::async::udp [ smoke ] { max datagram size }")
 					bool same = true;
 					for (std::size_t i = 0; i < async::transceiver::payload_size_limit; ++i)
 					{
-						if (buf.data()[i] != static_cast<byte_type>('Z'))
+						if (buf.data()[i] != static_cast<util::byte_type>('Z'))
 						{
 							same = false;
 							break;

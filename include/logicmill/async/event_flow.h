@@ -28,7 +28,7 @@
 #include <cstdint>
 #include <functional>
 #include <logicmill/async/error.h>
-#include <logicmill/traits.h>
+#include <util/traits.h>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -436,7 +436,7 @@ namespace detail
 {
 template<class T, class Source>
 static auto
-test_get_source_method(int) -> traits::sfinae_true_if<decltype(std::declval<T>().template get_source<Source>())>;
+test_get_source_method(int) -> util::traits::sfinae_true_if<decltype(std::declval<T>().template get_source<Source>())>;
 template<class>
 static auto
 test_get_source_method(long) -> std::false_type;
@@ -450,7 +450,7 @@ namespace detail
 {
 template<class T, class Sink>
 static auto
-test_get_sink_method(int) -> traits::sfinae_true_if<decltype(std::declval<T>().template get_sink<Sink>())>;
+test_get_sink_method(int) -> util::traits::sfinae_true_if<decltype(std::declval<T>().template get_sink<Sink>())>;
 template<class>
 static auto
 test_get_sink_method(long) -> std::false_type;
@@ -884,20 +884,20 @@ public:
 		assemble(m_tuple);
 	}
 
-	typename traits::nth_element<sizeof...(Args) - 1, Args...>&
+	typename util::traits::nth_element<sizeof...(Args) - 1, Args...>&
 	top()
 	{
 		return std::get<sizeof...(Args) - 1>(m_tuple);
 	}
 
-	typename traits::nth_element<0, Args...>&
+	typename util::traits::nth_element<0, Args...>&
 	bottom()
 	{
 		return std::get<0>(m_tuple);
 	}
 
 	template<std::size_t N>
-	typename traits::nth_element<N, Args...>&
+	typename util::traits::nth_element<N, Args...>&
 	layer()
 	{
 		return std::get<N>(m_tuple);

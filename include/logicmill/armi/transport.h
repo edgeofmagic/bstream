@@ -31,7 +31,7 @@
 #include <functional>
 #include <logicmill/armi/types.h>
 #include <logicmill/bstream/context.h>
-#include <logicmill/util/buffer.h>
+#include <util/buffer.h>
 #include <system_error>
 
 namespace logicmill

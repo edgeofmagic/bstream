@@ -28,13 +28,13 @@ using namespace logicmill;
 using namespace bstream;
 
 void
-buffer::sink::really_overflow(size_type n, std::error_code& err)
+buffer::sink::really_overflow(util::size_type n, std::error_code& err)
 {
 	err.clear();
-	assert(std::less_equal<byte_type*>()(m_next, m_end));
+	assert(std::less_equal<util::byte_type*>()(m_next, m_end));
 	assert((m_next - m_base) + n > m_buf.size());
 	auto      pos      = ppos();
-	size_type required = (m_next - m_base) + n;
+	util::size_type required = (m_next - m_base) + n;
 	resize(required, err);
 	if (!err)
 	{
@@ -44,10 +44,10 @@ buffer::sink::really_overflow(size_type n, std::error_code& err)
 }
 
 void
-buffer::sink::resize(size_type size, std::error_code& err)
+buffer::sink::resize(util::size_type size, std::error_code& err)
 {
 	err.clear();
-	size_type cushioned_size = (size * 3) / 2;
+	util::size_type cushioned_size = (size * 3) / 2;
 
 	if (!m_buf.is_expandable())
 	{
@@ -69,7 +69,7 @@ exit:
 }
 
 bool
-buffer::sink::is_valid_position(position_type pos) const
+buffer::sink::is_valid_position(util::position_type pos) const
 {
 	bool result = false;
 	if (m_buf.is_expandable())

@@ -28,21 +28,21 @@
 using namespace logicmill;
 using namespace bstream;
 
-position_type
-source::really_seek(position_type pos, std::error_code& err)
+util::position_type
+source::really_seek(util::position_type pos, std::error_code& err)
 {
 	err.clear();
 	m_next = m_base + pos;
 	return pos;
 }
 
-position_type
+util::position_type
 source::really_get_position() const
 {
 	return gpos();
 }
 
-size_type
+util::size_type
 source::really_underflow(std::error_code& err)
 {
 	err.clear();
@@ -56,17 +56,17 @@ source::really_rewind()
 	m_next = m_base;
 }
 
-size_type
+util::size_type
 source::really_get_size() const
 {
 	return m_end - m_base;
 }
 
-byte_type
+util::byte_type
 source::get(std::error_code& err)
 {
 	err.clear();
-	byte_type result = 0;
+	util::byte_type result = 0;
 	if (m_next >= m_end)
 	{
 		assert(m_next == m_end);
@@ -85,7 +85,7 @@ exit:
 	return result;
 }
 
-byte_type
+util::byte_type
 source::get()
 {
 	if (m_next >= m_end)
@@ -100,11 +100,11 @@ source::get()
 	return *m_next++;
 }
 
-byte_type
+util::byte_type
 source::peek(std::error_code& err)
 {
 	err.clear();
-	byte_type result = 0;
+	util::byte_type result = 0;
 	if (m_next >= m_end)
 	{
 		assert(m_next == m_end);
@@ -123,7 +123,7 @@ exit:
 	return result;
 }
 
-byte_type
+util::byte_type
 source::peek()
 {
 	if (m_next >= m_end)
@@ -139,7 +139,7 @@ source::peek()
 }
 
 util::shared_buffer
-source::get_shared_slice(size_type n, std::error_code& err)
+source::get_shared_slice(util::size_type n, std::error_code& err)
 {
 	err.clear();
 	if (n < 1)
@@ -162,7 +162,7 @@ source::get_shared_slice(size_type n, std::error_code& err)
 }
 
 util::shared_buffer
-source::get_shared_slice(size_type n)
+source::get_shared_slice(util::size_type n)
 {
 	if (n < 1)
 	{
@@ -176,7 +176,7 @@ source::get_shared_slice(size_type n)
 }
 
 util::const_buffer
-source::get_slice(size_type n, std::error_code& err)
+source::get_slice(util::size_type n, std::error_code& err)
 {
 	err.clear();
 	if (n < 1)
@@ -199,7 +199,7 @@ source::get_slice(size_type n, std::error_code& err)
 }
 
 util::const_buffer
-source::get_slice(size_type n)
+source::get_slice(util::size_type n)
 {
 	if (n < 1)
 	{
@@ -212,11 +212,11 @@ source::get_slice(size_type n)
 	return util::const_buffer{std::move(buf)};
 }
 
-size_type
-source::getn(byte_type* dst, size_type n, std::error_code& err)
+util::size_type
+source::getn(util::byte_type* dst, util::size_type n, std::error_code& err)
 {
 	err.clear();
-	size_type result = 0;
+	util::size_type result = 0;
 	if (n < 1)
 	{
 		goto exit;
@@ -231,8 +231,8 @@ source::getn(byte_type* dst, size_type n, std::error_code& err)
 	}
 	else
 	{
-		byte_type* p    = dst;
-		byte_type* endp = dst + n;
+		util::byte_type* p    = dst;
+		util::byte_type* endp = dst + n;
 		while (p < endp)
 		{
 			if (m_next >= m_end)
@@ -247,23 +247,23 @@ source::getn(byte_type* dst, size_type n, std::error_code& err)
 					goto exit;
 				}
 			}
-			size_type chunk_size = std::min(static_cast<size_type>(m_end - m_next), static_cast<size_type>(endp - p));
+			util::size_type chunk_size = std::min(static_cast<util::size_type>(m_end - m_next), static_cast<util::size_type>(endp - p));
 			if (chunk_size < 1)
 				break;
 			::memcpy(p, m_next, chunk_size);
 			p += chunk_size;
 			m_next += chunk_size;
 		}
-		result = static_cast<size_type>(p - dst);
+		result = static_cast<util::size_type>(p - dst);
 	}
 exit:
 	return result;
 }
 
-size_type
-source::getn(byte_type* dst, size_type n)
+util::size_type
+source::getn(util::byte_type* dst, util::size_type n)
 {
-	size_type result = 0;
+	util::size_type result = 0;
 	if (n < 1)
 	{
 		goto exit;
@@ -277,8 +277,8 @@ source::getn(byte_type* dst, size_type n)
 	}
 	else
 	{
-		byte_type* p    = dst;
-		byte_type* endp = dst + n;
+		util::byte_type* p    = dst;
+		util::byte_type* endp = dst + n;
 		while (p < endp)
 		{
 			if (m_next >= m_end)
@@ -289,20 +289,20 @@ source::getn(byte_type* dst, size_type n)
 					throw std::system_error{make_error_code(bstream::errc::read_past_end_of_stream)};
 				}
 			}
-			size_type chunk_size = std::min(static_cast<size_type>(m_end - m_next), static_cast<size_type>(endp - p));
+			util::size_type chunk_size = std::min(static_cast<util::size_type>(m_end - m_next), static_cast<util::size_type>(endp - p));
 			if (chunk_size < 1)
 				break;
 			::memcpy(p, m_next, chunk_size);
 			p += chunk_size;
 			m_next += chunk_size;
 		}
-		result = static_cast<size_type>(p - dst);
+		result = static_cast<util::size_type>(p - dst);
 	}
 exit:
 	return result;
 }
 
-size_type
+util::size_type
 source::underflow()
 {
 	std::error_code err;
@@ -314,10 +314,10 @@ source::underflow()
 	return available;
 }
 
-position_type
-source::new_position(offset_type offset, seek_anchor where) const
+util::position_type
+source::new_position(util::offset_type offset, seek_anchor where) const
 {
-	position_type result = npos;
+	util::position_type result = util::npos;
 
 	switch (where)
 	{
@@ -337,16 +337,16 @@ source::new_position(offset_type offset, seek_anchor where) const
 	return result;
 }
 
-position_type
-source::position(offset_type offset, seek_anchor where, std::error_code& err)
+util::position_type
+source::position(util::offset_type offset, seek_anchor where, std::error_code& err)
 {
 	err.clear();
-	position_type result = new_position(offset, where);
+	util::position_type result = new_position(offset, where);
 
 	if (result < 0 || result > (really_get_size()))
 	{
 		err    = make_error_code(std::errc::invalid_seek);
-		result = npos;
+		result = util::npos;
 		goto exit;
 	}
 
@@ -358,11 +358,11 @@ exit:
 	return result;
 }
 
-position_type
-source::position(position_type pos)
+util::position_type
+source::position(util::position_type pos)
 {
 	std::error_code err;
-	auto            result = position(static_cast<offset_type>(pos), seek_anchor::begin, err);
+	auto            result = position(static_cast<util::offset_type>(pos), seek_anchor::begin, err);
 	if (err)
 	{
 		throw std::system_error{err};
@@ -370,8 +370,8 @@ source::position(position_type pos)
 	return result;
 }
 
-position_type
-source::position(offset_type offset, seek_anchor where)
+util::position_type
+source::position(util::offset_type offset, seek_anchor where)
 {
 	std::error_code err;
 	auto            result = position(offset, where, err);
@@ -382,13 +382,13 @@ source::position(offset_type offset, seek_anchor where)
 	return result;
 }
 
-position_type
-source::position(position_type pos, std::error_code& err)
+util::position_type
+source::position(util::position_type pos, std::error_code& err)
 {
-	return position(static_cast<offset_type>(pos), seek_anchor::begin, err);
+	return position(static_cast<util::offset_type>(pos), seek_anchor::begin, err);
 }
 
-position_type
+util::position_type
 source::position() const
 {
 	return really_get_position();

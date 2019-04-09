@@ -45,8 +45,8 @@
 #include <boost/preprocessor/variadic/to_seq.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
-#include <logicmill/traits.h>
-#include <logicmill/util/preprocessor.h>
+#include <util/traits.h>
+#include <util/preprocessor.h>
 #include <type_traits>
 
 #define ARMI_CONTEXT(REMOTE_CONTEXT, TARGET_TYPE, ...)                                                                 \
@@ -112,7 +112,7 @@
 #define ARMI_DO_FUNCTION_PROXY_(r, TARGET_TYPE, N, MEMBER_FUNC)                                                        \
 	logicmill::armi::member_func_proxy<                                                                                \
 			client_proxy_base_type,                                                                                  \
-			logicmill::traits::remove_member_func_cv_noexcept<decltype(&TARGET_TYPE::MEMBER_FUNC)>::type>              \
+			util::traits::remove_member_func_cv_noexcept<decltype(&TARGET_TYPE::MEMBER_FUNC)>::type>              \
 			MEMBER_FUNC{m_client, N};
 /**/
 

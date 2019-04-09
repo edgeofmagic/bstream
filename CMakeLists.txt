@@ -15,6 +15,7 @@ message(STATUS "CMAKE_HOME_DIRECTORY = ${CMAKE_HOME_DIRECTORY}")
 enable_testing()
 
 add_subdirectory( ext/libuv )
+add_subdirectory( ext/util )
 
 # INCLUDE_DIRECTORIES(/Users/dcurtis/botan-install/include/botan-2)
 LINK_DIRECTORIES(/Users/dcurtis/botan-install/lib)
@@ -23,6 +24,7 @@ include_directories(
 	include 
 	ext/boost 
 	ext/libuv/include 
+	ext/util/include
 	ext/doctest/include 
 	/Users/dcurtis/botan-install/include/botan-2 
 	${CMAKE_HOME_DIRECTORY}/../cereal/include)
@@ -100,16 +102,6 @@ set(LOGICMILL_SRCS
 	include/logicmill/laps/framer.h
 	include/logicmill/laps/tls.h
 
-	include/logicmill/util/allocator.h
-	include/logicmill/util/dumpster.h
-	include/logicmill/util/macros.h
-	include/logicmill/util/preprocessor.h
-#	include/logicmill/util/shareable.h
-	include/logicmill/util/shared_ptr.h
-	include/logicmill/util/buffer.h
-	include/logicmill/util/promise.h
-	include/logicmill/util/membuf.h
-
 	src/bstream/error.cpp
 	src/bstream/error_category_context.cpp
 	src/bstream/ibstream.cpp
@@ -139,11 +131,7 @@ set(LOGICMILL_SRCS
 #	src/armi/adapters/async/server_adapter.cpp
 
 	src/laps/error.cpp
-	src/laps/tls.cpp
-
-	src/util/buffer.cpp
-	
-	src/fs_impl.cpp)
+	src/laps/tls.cpp)
 
 set(LOGICMILL_TEST_SRCS
 	test/bstream/abstract_source.cpp
@@ -156,7 +144,6 @@ set(LOGICMILL_TEST_SRCS
 #	test/bstream/test2.cpp
 	test/bstream/test3.cpp
 	test/bstream/test4.cpp
-	test/buffer.cpp
 	test/async/loop.cpp
 	test/async/address.cpp
 	test/async/endpoint.cpp
@@ -169,17 +156,12 @@ set(LOGICMILL_TEST_SRCS
 	test/armi/example_cereal.cpp
 	test/laps/layers.cpp
 	test/laps/tls_layer.cpp
-#	test/util/shareable.cpp
-	test/util/allocators.cpp
-	test/util/shared_ptr.cpp
-	test/util/promise.cpp
-	test/util/membuf.cpp
 	test/test_main.cpp)
 
 add_library(logicmill ${LOGICMILL_SRCS})
 
 add_executable(logicmill_test ${LOGICMILL_TEST_SRCS})
-target_link_libraries(logicmill_test logicmill uv_a botan-2)
+target_link_libraries(logicmill_test logicmill uv_a botan-2 util)
 
 #add_test(NAME test_bstream COMMAND logicmill_test --test-case=*bstream*)
 #add_test(NAME test_async COMMAND logicmill_test --test-case=*async*)

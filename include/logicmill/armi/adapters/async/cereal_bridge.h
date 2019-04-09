@@ -47,10 +47,10 @@ struct bridge<cereal::serialization_traits<ErrorContext>, async::async_io_traits
 	using serialization_traits = logicmill::armi::adapters::cereal::serialization_traits<ErrorContext>;
 	using async_io_traits     = logicmill::async::async_io_traits;
 
-	using mutable_buffer_type       = logicmill::util::mutable_buffer;
-	using mutable_buffer_param_type = logicmill::util::mutable_buffer&&;
-	using const_buffer_type         = logicmill::util::const_buffer;
-	using const_buffer_param_type   = logicmill::util::const_buffer&&;
+	using mutable_buffer_type       = util::mutable_buffer;
+	using mutable_buffer_param_type = util::mutable_buffer&&;
+	using const_buffer_type         = util::const_buffer;
+	using const_buffer_param_type   = util::const_buffer&&;
 
 	using serializer_type = typename serialization_traits::serializer_type;
 	using deserializer_type = typename serialization_traits::deserializer_type;

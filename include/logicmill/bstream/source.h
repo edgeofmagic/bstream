@@ -27,7 +27,7 @@
 
 #include <boost/endian/conversion.hpp>
 #include <logicmill/bstream/types.h>
-#include <logicmill/util/buffer.h>
+#include <util/buffer.h>
 
 namespace bend = boost::endian;
 
@@ -47,7 +47,7 @@ class source
 public:
 	friend class detail::source_test_probe;
 
-	source(const byte_type* buf, size_type size, byte_order order = byte_order::big_endian)
+	source(const util::byte_type* buf, util::size_type size, byte_order order = byte_order::big_endian)
 		: m_base_offset{0}, m_base{buf}, m_next{buf}, m_end{buf + size}, m_reverse{is_reverse(order)}
 	{}
 
@@ -79,35 +79,35 @@ protected:
 public:
 	virtual ~source() {}
 
-	byte_type
+	util::byte_type
 	get(std::error_code& err);
 
-	byte_type
+	util::byte_type
 	get();
 
-	byte_type
+	util::byte_type
 	peek(std::error_code& err);
 
-	byte_type
+	util::byte_type
 	peek();
 
 	virtual util::shared_buffer
-	get_shared_slice(size_type n, std::error_code& err);
+	get_shared_slice(util::size_type n, std::error_code& err);
 
 	virtual util::shared_buffer
-	get_shared_slice(size_type n);
+	get_shared_slice(util::size_type n);
 
 	virtual util::const_buffer
-	get_slice(size_type n, std::error_code& err);
+	get_slice(util::size_type n, std::error_code& err);
 
 	virtual util::const_buffer
-	get_slice(size_type n);
+	get_slice(util::size_type n);
 
-	size_type
-	getn(byte_type* dst, size_type n, std::error_code& err);
+	util::size_type
+	getn(util::byte_type* dst, util::size_type n, std::error_code& err);
 
-	size_type
-	getn(byte_type* dst, size_type n);
+	util::size_type
+	getn(util::byte_type* dst, util::size_type n);
 
 	template<class U>
 	typename std::enable_if<std::is_arithmetic<U>::value && sizeof(U) == 1, U>::type
@@ -130,7 +130,7 @@ public:
 		constexpr std::size_t usize = sizeof(U);
 		using ctype                 = typename detail::canonical_type<usize>::type;
 
-		using byte_vec = byte_type[usize];
+		using byte_vec = util::byte_type[usize];
 		ctype cval;
 		if (m_end - m_next >= usize)
 		{
@@ -147,7 +147,7 @@ public:
 		}
 		else
 		{
-			getn(reinterpret_cast<byte_type*>(&cval), usize);
+			getn(reinterpret_cast<util::byte_type*>(&cval), usize);
 			cval = m_reverse ? bend::endian_reverse(cval) : cval;
 		}
 		return reinterpret_cast<U&>(cval);
@@ -161,7 +161,7 @@ public:
 		constexpr std::size_t usize = sizeof(U);
 		using ctype                 = typename detail::canonical_type<usize>::type;
 
-		using byte_vec = byte_type[usize];
+		using byte_vec = util::byte_type[usize];
 		ctype cval;
 		if (m_end - m_next >= usize)
 		{
@@ -178,7 +178,7 @@ public:
 		}
 		else
 		{
-			getn(reinterpret_cast<byte_type*>(&cval), usize, err);
+			getn(reinterpret_cast<util::byte_type*>(&cval), usize, err);
 			cval = m_reverse ? bend::endian_reverse(cval) : cval;
 		}
 		return reinterpret_cast<U&>(cval);
@@ -191,7 +191,7 @@ public:
 		constexpr std::size_t usize = sizeof(U);
 		using ctype                 = typename detail::canonical_type<usize>::type;
 
-		using byte_vec = byte_type[usize];
+		using byte_vec = util::byte_type[usize];
 		ctype cval;
 		if (m_end - m_next >= usize)
 		{
@@ -212,7 +212,7 @@ public:
 		}
 		else
 		{
-			getn(reinterpret_cast<byte_type*>(&cval), usize);
+			getn(reinterpret_cast<util::byte_type*>(&cval), usize);
 			cval = m_reverse ? bend::endian_reverse(cval) : cval;
 		}
 		return reinterpret_cast<U&>(cval);
@@ -226,7 +226,7 @@ public:
 		constexpr std::size_t usize = sizeof(U);
 		using ctype                 = typename detail::canonical_type<usize>::type;
 
-		using byte_vec = byte_type[usize];
+		using byte_vec = util::byte_type[usize];
 		ctype cval;
 		if (m_end - m_next >= usize)
 		{
@@ -247,7 +247,7 @@ public:
 		}
 		else
 		{
-			getn(reinterpret_cast<byte_type*>(&cval), usize, err);
+			getn(reinterpret_cast<util::byte_type*>(&cval), usize, err);
 			cval = m_reverse ? bend::endian_reverse(cval) : cval;
 		}
 		return reinterpret_cast<U&>(cval);
@@ -260,7 +260,7 @@ public:
 		constexpr std::size_t usize = sizeof(U);
 		using ctype                 = typename detail::canonical_type<usize>::type;
 
-		using byte_vec = byte_type[usize];
+		using byte_vec = util::byte_type[usize];
 		ctype cval;
 		if (m_end - m_next >= usize)
 		{
@@ -289,7 +289,7 @@ public:
 		}
 		else
 		{
-			getn(reinterpret_cast<byte_type*>(&cval), usize);
+			getn(reinterpret_cast<util::byte_type*>(&cval), usize);
 			cval = m_reverse ? bend::endian_reverse(cval) : cval;
 		}
 		return reinterpret_cast<U&>(cval);
@@ -303,7 +303,7 @@ public:
 		constexpr std::size_t usize = sizeof(U);
 		using ctype                 = typename detail::canonical_type<usize>::type;
 
-		using byte_vec = byte_type[usize];
+		using byte_vec = util::byte_type[usize];
 		ctype cval;
 		if (m_end - m_next >= usize)
 		{
@@ -332,19 +332,19 @@ public:
 		}
 		else
 		{
-			getn(reinterpret_cast<byte_type*>(&cval), usize, err);
+			getn(reinterpret_cast<util::byte_type*>(&cval), usize, err);
 			cval = m_reverse ? bend::endian_reverse(cval) : cval;
 		}
 		return reinterpret_cast<U&>(cval);
 	}
 
-	size_type
+	util::size_type
 	size() const
 	{
 		return really_get_size();
 	}
 
-	size_type
+	util::size_type
 	remaining() const
 	{
 		return really_get_size() - gpos();
@@ -356,88 +356,88 @@ public:
 		really_rewind();
 	}
 
-	size_type
+	util::size_type
 	available() const
 	{
 		assert(m_end >= m_next);
-		return static_cast<size_type>(m_end - m_next);
+		return static_cast<util::size_type>(m_end - m_next);
 	}
 
 	/*
 	 * random-access methods (seek/tell)
 	 */
 
-	position_type
-	position(position_type position, std::error_code& err);
+	util::position_type
+	position(util::position_type position, std::error_code& err);
 
-	position_type
-	position(position_type position);
+	util::position_type
+	position(util::position_type position);
 
-	position_type
-	position(offset_type offset, seek_anchor where, std::error_code& err);
+	util::position_type
+	position(util::offset_type offset, seek_anchor where, std::error_code& err);
 
-	position_type
-	position(offset_type offset, seek_anchor where);
+	util::position_type
+	position(util::offset_type offset, seek_anchor where);
 
-	position_type
+	util::position_type
 	position() const;
 
 protected:
-	const byte_type*
-	gbump(offset_type offset)
+	const util::byte_type*
+	gbump(util::offset_type offset)
 	{
 		m_next += offset;
 		return m_next;
 	}
 
-	position_type
+	util::position_type
 	gpos() const
 	{
 		return m_base_offset + (m_next - m_base);
 	}
 
-	size_type
+	util::size_type
 	underflow(std::error_code& err)
 	{
 		return really_underflow(err);
 	}
 
-	size_type
+	util::size_type
 	underflow();
 
 	void
-	set_ptrs(const byte_type* base, const byte_type* next, const byte_type* end)
+	set_ptrs(const util::byte_type* base, const util::byte_type* next, const util::byte_type* end)
 	{
 		m_base = base;
 		m_next = next;
 		m_end  = end;
 	}
 
-	virtual size_type
+	virtual util::size_type
 	really_underflow(std::error_code& err);
 
-	position_type
-	new_position(offset_type offset, seek_anchor where) const;
+	util::position_type
+	new_position(util::offset_type offset, seek_anchor where) const;
 
-	virtual position_type
-	really_seek(position_type pos, std::error_code& err);
+	virtual util::position_type
+	really_seek(util::position_type pos, std::error_code& err);
 
 	// TODO: is this necessary with the removal of source_base ?
-	virtual position_type
+	virtual util::position_type
 	really_get_position() const;
 
 	// TODO: is this necessary with the removal of source_base ?
-	virtual size_type
+	virtual util::size_type
 	really_get_size() const;
 
 	// TODO: is this necessary with the removal of source_base ?
 	virtual void
 	really_rewind();
 
-	position_type    m_base_offset;
-	const byte_type* m_base;
-	const byte_type* m_next;
-	const byte_type* m_end;
+	util::position_type    m_base_offset;
+	const util::byte_type* m_base;
+	const util::byte_type* m_next;
+	const util::byte_type* m_end;
 	bool             m_reverse;
 };
 

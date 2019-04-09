@@ -26,7 +26,7 @@
 #include <iostream>
 #include <logicmill/async/loop.h>
 #include <logicmill/async/tcp.h>
-#include <logicmill/util/buffer.h>
+#include <util/buffer.h>
 
 using namespace logicmill;
 using namespace async;

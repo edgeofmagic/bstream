@@ -29,7 +29,7 @@
 using namespace logicmill;
 using namespace bstream;
 
-file::source::source(size_type buffer_size, byte_order order)
+file::source::source(util::size_type buffer_size, byte_order order)
 	: base{order}, m_buf{buffer_size}, m_filename{}, m_is_open{false}, m_flags{O_RDONLY}, m_fd{-1}, m_size{0}
 {}
 
@@ -37,7 +37,7 @@ file::source::source(
 		std::string const& filename,
 		std::error_code&   err,
 		int                flag_overrides,
-		size_type          buffer_size,
+		util::size_type          buffer_size,
 		byte_order         order)
 	: base{order},
 	  m_buf{buffer_size},
@@ -50,7 +50,7 @@ file::source::source(
 	really_open(err);
 }
 
-file::source::source(std::string const& filename, int flag_overrides, size_type buffer_size, byte_order order)
+file::source::source(std::string const& filename, int flag_overrides, util::size_type buffer_size, byte_order order)
 	: base{order},
 	  m_buf{buffer_size},
 	  m_filename{filename},
@@ -67,14 +67,14 @@ file::source::source(std::string const& filename, int flag_overrides, size_type 
 	}
 }
 
-size_type
+util::size_type
 file::source::really_underflow(std::error_code& err)
 {
 	err.clear();
 	assert(m_next == m_end);
 	m_base_offset       = gpos();
 	m_next              = m_base;
-	size_type available = load_buffer(err);
+	util::size_type available = load_buffer(err);
 	if (err)
 	{
 		available = 0;
@@ -119,13 +119,13 @@ file::source::close()
 	}
 }
 
-size_type
+util::size_type
 file::source::load_buffer(std::error_code& err)
 {
 	err.clear();
 	assert(m_next == m_base);
 
-	auto read_result = ::read(m_fd, const_cast<byte_type*>(m_base), m_buf.capacity());
+	auto read_result = ::read(m_fd, const_cast<util::byte_type*>(m_base), m_buf.capacity());
 	if (read_result < 0)
 	{
 		err         = std::error_code{errno, std::generic_category()};
@@ -163,7 +163,7 @@ file::source::really_open(std::error_code& err)
 	if (seek_result < 0)
 	{
 		err    = std::error_code{errno, std::generic_category()};
-		m_size = npos;
+		m_size = util::npos;
 		goto exit;
 	}
 	else
@@ -185,7 +185,7 @@ exit:
 	return;
 }
 
-size_type
+util::size_type
 file::source::really_get_size() const
 {
 	return m_size;
@@ -213,18 +213,18 @@ file::source::open(std::string const& filename, int flag_overrides)
 	}
 }
 
-position_type
-file::source::really_seek(position_type pos, std::error_code& err)
+util::position_type
+file::source::really_seek(util::position_type pos, std::error_code& err)
 {
 	err.clear();
-	position_type result = npos;
+	util::position_type result = util::npos;
 
 	result = ::lseek(m_fd, pos, SEEK_SET);
 
 	if (result < 0)
 	{
 		err    = std::error_code{errno, std::generic_category()};
-		result = npos;
+		result = util::npos;
 		goto exit;
 	}
 
@@ -234,7 +234,7 @@ exit:
 	return result;
 }
 
-position_type
+util::position_type
 file::source::really_get_position() const
 {
 	return gpos();

@@ -30,7 +30,7 @@
 #include <logicmill/bstream/obstream_traits.h>
 #include <logicmill/bstream/sink.h>
 #include <logicmill/bstream/typecode.h>
-#include <logicmill/util/buffer.h>
+#include <util/buffer.h>
 #include <unordered_map>
 #include <vector>
 
@@ -142,16 +142,16 @@ public:
 	}
 
 	obstream&
-	putn(const void* src, size_type nbytes)
+	putn(const void* src, util::size_type nbytes)
 	{
-		m_sink->putn(reinterpret_cast<const byte_type*>(src), nbytes);
+		m_sink->putn(reinterpret_cast<const util::byte_type*>(src), nbytes);
 		return *this;
 	}
 
 	obstream&
-	putn(const void* src, size_type nbytes, std::error_code& err)
+	putn(const void* src, util::size_type nbytes, std::error_code& err)
 	{
-		m_sink->putn(reinterpret_cast<const byte_type*>(src), nbytes, err);
+		m_sink->putn(reinterpret_cast<const util::byte_type*>(src), nbytes, err);
 		return *this;
 	}
 
@@ -189,38 +189,38 @@ public:
 		return *this;
 	}
 
-	size_type
+	util::size_type
 	size()
 	{
-		return static_cast<size_type>(m_sink->size());
+		return static_cast<util::size_type>(m_sink->size());
 	}
 
-	position_type
+	util::position_type
 	position() const
 	{
 		return m_sink->position();
 	}
 
-	position_type
-	position(position_type pos)
+	util::position_type
+	position(util::position_type pos)
 	{
 		return m_sink->position(pos);
 	}
 
-	position_type
-	position(position_type pos, std::error_code& err)
+	util::position_type
+	position(util::position_type pos, std::error_code& err)
 	{
 		return m_sink->position(pos, err);
 	}
 
-	position_type
-	position(offset_type offset, seek_anchor where)
+	util::position_type
+	position(util::offset_type offset, seek_anchor where)
 	{
 		return m_sink->position(offset, where);
 	}
 
-	position_type
-	position(offset_type offset, seek_anchor where, std::error_code& err)
+	util::position_type
+	position(util::offset_type offset, seek_anchor where, std::error_code& err)
 	{
 		return m_sink->position(offset, where, err);
 	}
@@ -228,7 +228,7 @@ public:
 	void
 	write(const char* src, std::size_t len)
 	{
-		putn(reinterpret_cast<const byte_type*>(src), len);
+		putn(reinterpret_cast<const util::byte_type*>(src), len);
 	}
 
 
@@ -253,14 +253,14 @@ public:
 	obstream&
 	write_blob_body(const void* p, std::size_t size)
 	{
-		putn(reinterpret_cast<const byte_type*>(p), size);
+		putn(reinterpret_cast<const util::byte_type*>(p), size);
 		return *this;
 	}
 
 	obstream&
 	write_blob_body(const void* p, std::size_t size, std::error_code& err)
 	{
-		putn(reinterpret_cast<const byte_type*>(p), size, err);
+		putn(reinterpret_cast<const util::byte_type*>(p), size, err);
 		return *this;
 	}
 

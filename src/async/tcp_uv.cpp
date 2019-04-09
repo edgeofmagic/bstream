@@ -27,10 +27,10 @@
 
 using namespace logicmill;
 
-logicmill::util::shared_ptr<tcp_channel_uv>
+util::shared_ptr<tcp_channel_uv>
 connect_request_uv::get_channel_shared_ptr(uv_connect_t* req)
 {
-	return logicmill::util::dynamic_pointer_cast<tcp_channel_uv>(tcp_base_uv::get_base_shared_ptr(req->handle));
+	return util::dynamic_pointer_cast<tcp_channel_uv>(tcp_base_uv::get_base_shared_ptr(req->handle));
 }
 
 void
@@ -46,10 +46,10 @@ connect_request_uv::on_connect(uv_connect_t* req, int status)
 
 /* tcp_write_buf_req_uv */
 
-logicmill::util::shared_ptr<tcp_channel_uv>
+util::shared_ptr<tcp_channel_uv>
 tcp_write_buf_req_uv::get_channel_shared_ptr(uv_write_t* req)
 {
-	return logicmill::util::dynamic_pointer_cast<tcp_channel_uv>(tcp_base_uv::get_base_shared_ptr(req->handle));
+	return util::dynamic_pointer_cast<tcp_channel_uv>(tcp_base_uv::get_base_shared_ptr(req->handle));
 }
 
 void
@@ -66,10 +66,10 @@ tcp_write_buf_req_uv::on_write(uv_write_t* req, int status)
 
 /* tcp_write_bufs_req_uv */
 
-logicmill::util::shared_ptr<tcp_channel_uv>
+util::shared_ptr<tcp_channel_uv>
 tcp_write_bufs_req_uv::get_channel_shared_ptr(uv_write_t* req)
 {
-	return logicmill::util::dynamic_pointer_cast<tcp_channel_uv>(tcp_base_uv::get_base_shared_ptr(req->handle));
+	return util::dynamic_pointer_cast<tcp_channel_uv>(tcp_base_uv::get_base_shared_ptr(req->handle));
 }
 
 void
@@ -118,7 +118,7 @@ tcp_channel_uv::clear_handler()
 {
 	if (m_close_handler)
 	{
-		m_close_handler(logicmill::util::dynamic_pointer_cast<tcp_channel_uv>(m_data.m_self_ptr));
+		m_close_handler(util::dynamic_pointer_cast<tcp_channel_uv>(m_data.m_self_ptr));
 		m_close_handler = nullptr;
 	}
 	m_read_handler = nullptr;
@@ -139,13 +139,13 @@ void
 tcp_channel_uv::on_read(uv_stream_t* stream_handle, ssize_t nread, const uv_buf_t* buf)
 {
 	std::error_code err;
-	ptr             channel_ptr = logicmill::util::dynamic_pointer_cast<tcp_channel_uv>(get_base_shared_ptr(stream_handle));
+	ptr             channel_ptr = util::dynamic_pointer_cast<tcp_channel_uv>(get_base_shared_ptr(stream_handle));
 	assert(channel_ptr);
 	if (nread < 0)
 	{
 		if (buf->base)
 		{
-			delete[] reinterpret_cast<byte_type*>(buf->base);
+			delete[] reinterpret_cast<util::byte_type*>(buf->base);
 		}
 		err = map_uv_error(nread);
 		channel_ptr->m_read_handler(channel_ptr, util::const_buffer{}, err);
@@ -154,9 +154,9 @@ tcp_channel_uv::on_read(uv_stream_t* stream_handle, ssize_t nread, const uv_buf_
 	{
 		channel_ptr->m_read_handler(
 				channel_ptr,
-				util::const_buffer{reinterpret_cast<byte_type*>(buf->base),
-								   static_cast<size_type>(nread),
-								   std::default_delete<byte_type[]>{}},
+				util::const_buffer{reinterpret_cast<util::byte_type*>(buf->base),
+								   static_cast<util::size_type>(nread),
+								   std::default_delete<util::byte_type[]>{}},
 				err);
 	}
 }
@@ -165,7 +165,7 @@ void
 tcp_channel_uv::on_allocate(uv_handle_t* handle, size_t suggested_size, uv_buf_t* buf)
 {
 	// static buffer::memory_broker::ptr broker = buffer::default_broker::get();
-	buf->base = reinterpret_cast<char*>(new byte_type[suggested_size]);
+	buf->base = reinterpret_cast<char*>(new util::byte_type[suggested_size]);
 	buf->len  = suggested_size;
 }
 
@@ -329,13 +329,13 @@ void
 tcp_framed_channel_uv::on_read(uv_stream_t* stream_handle, ssize_t nread, const uv_buf_t* buf)
 {
 	std::error_code err;
-	ptr             channel_ptr = logicmill::util::dynamic_pointer_cast<tcp_framed_channel_uv>(get_base_shared_ptr(stream_handle));
+	ptr             channel_ptr = util::dynamic_pointer_cast<tcp_framed_channel_uv>(get_base_shared_ptr(stream_handle));
 	assert(channel_ptr);
 	if (nread < 0)
 	{
 		if (buf->base)
 		{
-			delete[] reinterpret_cast<byte_type*>(buf->base);
+			delete[] reinterpret_cast<util::byte_type*>(buf->base);
 		}
 		err = map_uv_error(nread);
 		channel_ptr->m_read_handler(channel_ptr, util::const_buffer{}, err);
@@ -344,9 +344,9 @@ tcp_framed_channel_uv::on_read(uv_stream_t* stream_handle, ssize_t nread, const 
 	{
 		channel_ptr->read_to_frame(
 				channel_ptr,
-				util::const_buffer{reinterpret_cast<byte_type*>(buf->base),
-								   static_cast<size_type>(nread),
-								   std::default_delete<byte_type[]>{}});
+				util::const_buffer{reinterpret_cast<util::byte_type*>(buf->base),
+								   static_cast<util::size_type>(nread),
+								   std::default_delete<util::byte_type[]>{}});
 	}
 }
 
@@ -373,7 +373,7 @@ tcp_framed_channel_uv::read_to_frame(ptr channel_ptr, util::const_buffer&& buf)
 			{
 				nbytes_to_move = buf.size();
 			}
-			// util::mutable_buffer hbuf{const_cast<const byte_type*>(m_header_buf), 8};
+			// util::mutable_buffer hbuf{const_cast<const util::byte_type*>(m_header_buf), 8};
 			::memcpy(&m_header_buf[m_header_byte_count], buf.data() + current_buffer_position, nbytes_to_move);
 			m_header_byte_count += nbytes_to_move;
 			current_buffer_position += nbytes_to_move;
@@ -577,7 +577,7 @@ exit:
 void
 tcp_acceptor_uv::on_connection(uv_stream_t* handle, int stat)
 {
-	auto acceptor_ptr = logicmill::util::dynamic_pointer_cast<tcp_acceptor_uv>(get_base_shared_ptr(handle));
+	auto acceptor_ptr = util::dynamic_pointer_cast<tcp_acceptor_uv>(get_base_shared_ptr(handle));
 
 	if (stat < 0)
 	{
@@ -587,7 +587,7 @@ tcp_acceptor_uv::on_connection(uv_stream_t* handle, int stat)
 	else
 	{
 		std::error_code err;
-		auto            channel_ptr = logicmill::util::make_shared<tcp_channel_uv>();
+		auto            channel_ptr = util::make_shared<tcp_channel_uv>();
 		channel_ptr->init(acceptor_ptr->get_handle()->loop, channel_ptr, err);
 		if (err)
 		{
@@ -609,7 +609,7 @@ void
 tcp_acceptor_uv::on_framing_connection(uv_stream_t* handle, int stat)
 {
 
-	auto acceptor_ptr = logicmill::util::dynamic_pointer_cast<tcp_acceptor_uv>(get_base_shared_ptr(handle));
+	auto acceptor_ptr = util::dynamic_pointer_cast<tcp_acceptor_uv>(get_base_shared_ptr(handle));
 
 	if (stat < 0)
 	{
@@ -619,7 +619,7 @@ tcp_acceptor_uv::on_framing_connection(uv_stream_t* handle, int stat)
 	else
 	{
 		std::error_code err;
-		auto            channel_ptr = logicmill::util::make_shared<tcp_framed_channel_uv>();
+		auto            channel_ptr = util::make_shared<tcp_framed_channel_uv>();
 		channel_ptr->init(acceptor_ptr->get_handle()->loop, channel_ptr, err);
 		if (err)
 		{

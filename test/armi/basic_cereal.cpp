@@ -28,7 +28,7 @@
 #include <logicmill/armi/armi.h>
 #include <logicmill/async/channel.h>
 #include <logicmill/async/loop.h>
-#include <logicmill/util/error_context.h>
+#include <util/error_context.h>
 
 #define END_LOOP(loop_ptr, delay_ms)                                                                                   \
 	{                                                                                                                  \

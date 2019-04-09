@@ -32,7 +32,7 @@
 #include <logicmill/async/options.h>
 #include <logicmill/async/timer.h>
 #include <logicmill/async/transceiver.h>
-#include <logicmill/util/promise.h>
+#include <util/promise.h>
 #include <memory>
 #include <system_error>
 
@@ -436,7 +436,7 @@ protected:
 }    // namespace logicmill
 
 template<>
-class logicmill::util::promise_timer<logicmill::async::loop::ptr>
+class util::promise_timer<logicmill::async::loop::ptr>
 {
 public:
 	promise_timer(std::chrono::milliseconds t, logicmill::async::loop::ptr const& lp) : m_timeout{t}, m_loop{lp} {}

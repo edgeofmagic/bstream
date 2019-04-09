@@ -30,8 +30,8 @@
 #include <logicmill/bstream/error_category_context.h>
 #include <logicmill/bstream/ibstream_traits.h>
 #include <logicmill/bstream/types.h>
-#include <logicmill/util/buffer.h>
-#include <logicmill/util/shared_ptr.h>
+#include <util/buffer.h>
+#include <util/shared_ptr.h>
 #include <typeindex>
 
 namespace logicmill
@@ -69,7 +69,7 @@ public:
 	}
 
 	context_options&
-	buffer_size(size_type bsize)
+	buffer_size(util::size_type bsize)
 	{
 		m_buf_size = bsize;
 		return *this;
@@ -79,7 +79,7 @@ private:
 	std::vector<const std::error_category*> m_categories;
 	bool                                    m_dedup;
 	enum byte_order                         m_byte_order;
-	size_type                               m_buf_size;
+	util::size_type                               m_buf_size;
 };
 
 
@@ -108,7 +108,7 @@ public:
 		  m_buffer_size{opts.m_buf_size}
 	{}
 
-	context_base(bool dedup_shared_ptrs, byte_order order, size_type buffer_size = 65536)
+	context_base(bool dedup_shared_ptrs, byte_order order, util::size_type buffer_size = 65536)
 		: error_category_context{},
 		  m_dedup_shared_ptrs{dedup_shared_ptrs},
 		  m_byte_order{order},
@@ -176,7 +176,7 @@ public:
 		return m_byte_order;
 	}
 
-	size_type
+	util::size_type
 	buffer_size() const
 	{
 		return m_buffer_size;
@@ -185,7 +185,7 @@ public:
 private:
 	bool            m_dedup_shared_ptrs;
 	enum byte_order m_byte_order;
-	size_type       m_buffer_size;
+	util::size_type       m_buffer_size;
 };
 
 using poly_raw_factory_func = std::function<void*(ibstream&)>;
@@ -227,7 +227,7 @@ public:
 
 	context(context_options const& opts) : context_base{opts} {}
 
-	context(bool dedup_shared_ptrs = true, enum byte_order order = byte_order::big_endian, size_type buf_size = 65536UL)
+	context(bool dedup_shared_ptrs = true, enum byte_order order = byte_order::big_endian, util::size_type buf_size = 65536UL)
 		: context_base{dedup_shared_ptrs, order, buf_size}
 	{}
 
@@ -272,7 +272,7 @@ protected:
 
 template<class... Args>
 const std::unordered_map<std::type_index, poly_tag_type> context<Args...>::m_type_tag_map
-		= {{typeid(Args), traits::index<Args, Args...>::value}...};
+		= {{typeid(Args), util::traits::index<Args, Args...>::value}...};
 
 template<class... Args>
 const can_downcast_ptr_table<Args...> context<Args...>::m_downcast_ptr_table;

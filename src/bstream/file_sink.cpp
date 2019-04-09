@@ -42,7 +42,7 @@ file::sink::sink(sink&& rhs)
 file::sink::sink(
 		std::string const& filename,
 		open_mode          mode,
-		size_type          buffer_size,
+		util::size_type          buffer_size,
 		byte_order         order,
 		std::error_code&   err)
 	: base{order},
@@ -57,7 +57,7 @@ file::sink::sink(
 	really_open(err);
 }
 
-file::sink::sink(std::string const& filename, open_mode mode, size_type buffer_size, byte_order order)
+file::sink::sink(std::string const& filename, open_mode mode, util::size_type buffer_size, byte_order order)
 	: base{order},
 	  m_buf{buffer_size},
 	  m_filename{filename},
@@ -76,7 +76,7 @@ file::sink::sink(std::string const& filename, open_mode mode, size_type buffer_s
 }
 
 
-file::sink::sink(std::string const& filename, open_mode mode, size_type buffer_size, std::error_code& err)
+file::sink::sink(std::string const& filename, open_mode mode, util::size_type buffer_size, std::error_code& err)
 	: base{byte_order::big_endian},
 	  m_buf{buffer_size},
 	  m_filename{filename},
@@ -89,7 +89,7 @@ file::sink::sink(std::string const& filename, open_mode mode, size_type buffer_s
 	really_open(err);
 }
 
-file::sink::sink(std::string const& filename, open_mode mode, size_type buffer_size)
+file::sink::sink(std::string const& filename, open_mode mode, util::size_type buffer_size)
 	: base{byte_order::big_endian},
 	  m_buf{buffer_size},
 	  m_filename{filename},
@@ -108,7 +108,7 @@ file::sink::sink(std::string const& filename, open_mode mode, size_type buffer_s
 }
 
 
-file::sink::sink(open_mode mode, size_type buffer_size, byte_order order)
+file::sink::sink(open_mode mode, util::size_type buffer_size, byte_order order)
 	: base{order}, m_buf{buffer_size}, m_filename{}, m_is_open{false}, m_mode{mode}, m_flags{to_flags(m_mode)}, m_fd{-1}
 {
 	reset_ptrs();
@@ -188,14 +188,14 @@ file::sink::really_flush(std::error_code& err)
 	assert(m_dirty && m_next > m_dirty_start);
 	assert(m_dirty_start == m_base);
 
-	size_type n            = static_cast<size_type>(m_next - m_base);
+	util::size_type n            = static_cast<util::size_type>(m_next - m_base);
 	auto      write_result = ::write(m_fd, m_base, n);
 	if (write_result < 0)
 	{
 		err = std::error_code{errno, std::generic_category()};
 		goto exit;
 	}
-	assert(static_cast<size_type>(write_result) == n);
+	assert(static_cast<util::size_type>(write_result) == n);
 	m_base_offset = pos;
 	m_next        = m_base;
 exit:
@@ -203,7 +203,7 @@ exit:
 }
 
 bool
-file::sink::is_valid_position(position_type pos) const
+file::sink::is_valid_position(util::position_type pos) const
 {
 	return pos >= 0;
 }
@@ -237,7 +237,7 @@ exit:
 }
 
 void
-file::sink::really_overflow(size_type, std::error_code& err)
+file::sink::really_overflow(util::size_type, std::error_code& err)
 {
 	err.clear();
 	assert(m_base_offset == ppos() && m_next == m_base);
@@ -285,11 +285,11 @@ file::sink::open()
 	}
 }
 
-position_type
+util::position_type
 file::sink::truncate(std::error_code& err)
 {
 	err.clear();
-	position_type result = npos;
+	util::position_type result = util::npos;
 
 	flush(err);
 	if (err)
@@ -313,7 +313,7 @@ exit:
 	return result;
 }
 
-position_type
+util::position_type
 file::sink::truncate()
 {
 	std::error_code err;

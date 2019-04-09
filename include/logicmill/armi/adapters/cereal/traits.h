@@ -31,8 +31,8 @@
 #include <functional>
 // #include <logicmill/armi/serialization_traits.h>
 #include <logicmill/armi/types.h>
-#include <logicmill/util/error_context.h>
-#include <logicmill/util/membuf.h>
+#include <util/error_context.h>
+#include <util/membuf.h>
 
 namespace logicmill
 {
@@ -43,7 +43,7 @@ namespace adapters
 namespace cereal
 {
 
-template<class ErrorContext = logicmill::util::default_error_context>
+template<class ErrorContext = util::default_error_context>
 class cerealizer
 {
 public:
@@ -81,7 +81,7 @@ private:
 	archive_type  m_arch;
 };
 
-template<class ErrorContext = logicmill::util::default_error_context>
+template<class ErrorContext = util::default_error_context>
 class decerealizer
 {
 public:

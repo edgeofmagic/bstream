@@ -30,7 +30,7 @@
 #include <logicmill/async/loop.h>
 #include <logicmill/bstream/stdlib/pair.h>
 #include <logicmill/bstream/stdlib/vector.h>
-#include <logicmill/util/error_context.h>
+#include <util/error_context.h>
 
 #define END_LOOP(loop_ptr, delay_ms)                                                                                   \
 	{                                                                                                                  \

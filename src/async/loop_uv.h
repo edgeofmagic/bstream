@@ -32,7 +32,7 @@
 #include <uv.h>
 
 using logicmill::async::ip::endpoint;
-using logicmill::util::mutable_buffer;
+using util::mutable_buffer;
 using logicmill::async::transceiver;
 using logicmill::async::acceptor;
 using logicmill::async::channel;
@@ -155,7 +155,7 @@ private:
 	virtual transceiver::ptr
 	really_create_transceiver(options const& opt, std::error_code& err) override;
 
-	logicmill::util::shared_ptr<udp_transceiver_uv>
+	util::shared_ptr<udp_transceiver_uv>
 	setup_transceiver(options const& opts, std::error_code& err);
 
 	virtual void

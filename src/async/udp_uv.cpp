@@ -31,7 +31,7 @@ using namespace logicmill;
 udp_transceiver_uv::ptr
 udp_send_buf_req_uv::get_transceiver_shared_ptr(uv_udp_send_t* req)
 {
-	return logicmill::util::dynamic_pointer_cast<udp_transceiver_uv>(udp_transceiver_uv::get_shared_ptr(req->handle));
+	return util::dynamic_pointer_cast<udp_transceiver_uv>(udp_transceiver_uv::get_shared_ptr(req->handle));
 }
 
 void
@@ -51,7 +51,7 @@ udp_send_buf_req_uv::on_send(uv_udp_send_t* req, int status)
 udp_transceiver_uv::ptr
 udp_send_bufs_req_uv::get_transceiver_shared_ptr(uv_udp_send_t* req)
 {
-	return logicmill::util::dynamic_pointer_cast<udp_transceiver_uv>(udp_transceiver_uv::get_shared_ptr(req->handle));
+	return util::dynamic_pointer_cast<udp_transceiver_uv>(udp_transceiver_uv::get_shared_ptr(req->handle));
 }
 
 void
@@ -91,13 +91,13 @@ udp_transceiver_uv::on_receive(
 		const struct sockaddr* addr,
 		unsigned               flags)
 {
-	ptr transceiver_ptr = logicmill::util::dynamic_pointer_cast<udp_transceiver_uv>(get_shared_ptr(udp_handle));
+	ptr transceiver_ptr = util::dynamic_pointer_cast<udp_transceiver_uv>(get_shared_ptr(udp_handle));
 	assert(transceiver_ptr);
 	if (nread < 0)
 	{
 		if (buf->base)
 		{
-			delete[] reinterpret_cast<byte_type*>(buf->base);
+			delete[] reinterpret_cast<util::byte_type*>(buf->base);
 		}
 		transceiver_ptr->m_receive_handler(
 				transceiver_ptr,
@@ -109,7 +109,7 @@ udp_transceiver_uv::on_receive(
 	{
 		if (buf->base)
 		{
-			delete[] reinterpret_cast<byte_type*>(buf->base);
+			delete[] reinterpret_cast<util::byte_type*>(buf->base);
 		}
 		if (addr)
 		{
@@ -124,9 +124,9 @@ udp_transceiver_uv::on_receive(
 	{
 		transceiver_ptr->m_receive_handler(
 				transceiver_ptr,
-				util::const_buffer{reinterpret_cast<byte_type*>(buf->base),
-								   static_cast<size_type>(nread),
-								   std::default_delete<byte_type[]>{}},
+				util::const_buffer{reinterpret_cast<util::byte_type*>(buf->base),
+								   static_cast<util::size_type>(nread),
+								   std::default_delete<util::byte_type[]>{}},
 				async::ip::endpoint{*reinterpret_cast<const sockaddr_storage*>(addr)},
 				std::error_code{});
 	}
@@ -136,8 +136,8 @@ void
 udp_transceiver_uv::on_allocate(uv_handle_t* handle, size_t suggested_size, uv_buf_t* buf)
 {
 	// static buffer::memory_broker::ptr broker = buffer::default_broker::get();
-	// buf->base = reinterpret_cast<char*>(std::allocator<byte_type>{}.allocate(suggested_size));
-	buf->base = reinterpret_cast<char*>(new byte_type[suggested_size]);
+	// buf->base = reinterpret_cast<char*>(std::allocator<util::byte_type>{}.allocate(suggested_size));
+	buf->base = reinterpret_cast<char*>(new util::byte_type[suggested_size]);
 	buf->len  = suggested_size;
 }
 

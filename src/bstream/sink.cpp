@@ -27,7 +27,7 @@
 using namespace logicmill;
 using namespace bstream;
 
-bstream::sink::sink(byte_type* data, size_type size, byte_order order)
+bstream::sink::sink(util::byte_type* data, util::size_type size, byte_order order)
 	: m_base_offset{0},
 	  m_high_watermark{0},
 	  m_jump_to{0},
@@ -111,7 +111,7 @@ bstream::sink::flush()
 }
 
 void
-bstream::sink::put(byte_type byte, std::error_code& err)
+bstream::sink::put(util::byte_type byte, std::error_code& err)
 {
 	err.clear();
 	if (m_did_jump)
@@ -140,7 +140,7 @@ exit:
 }
 
 void
-bstream::sink::put(byte_type byte)
+bstream::sink::put(util::byte_type byte)
 {
 	if (m_did_jump)
 	{
@@ -164,7 +164,7 @@ bstream::sink::put(byte_type byte)
 }
 
 void
-bstream::sink::putn(const byte_type* src, size_type n, std::error_code& err)
+bstream::sink::putn(const util::byte_type* src, util::size_type n, std::error_code& err)
 {
 	err.clear();
 	if (n < 1)
@@ -177,7 +177,7 @@ bstream::sink::putn(const byte_type* src, size_type n, std::error_code& err)
 			goto exit;
 	}
 
-	if (n <= static_cast<size_type>(m_end - m_next))    // optimize for common case ( no overflow )
+	if (n <= static_cast<util::size_type>(m_end - m_next))    // optimize for common case ( no overflow )
 	{
 		if (!m_dirty)
 		{
@@ -206,7 +206,7 @@ bstream::sink::putn(const byte_type* src, size_type n, std::error_code& err)
 				m_dirty_start = m_next;
 				m_dirty       = true;
 			}
-			size_type chunk_size = std::min(static_cast<size_type>(m_end - m_next), static_cast<size_type>(limit - p));
+			util::size_type chunk_size = std::min(static_cast<util::size_type>(m_end - m_next), static_cast<util::size_type>(limit - p));
 			::memcpy(m_next, p, chunk_size);
 			p += chunk_size;
 			m_next += chunk_size;
@@ -218,7 +218,7 @@ exit:
 }
 
 void
-bstream::sink::putn(const byte_type* src, size_type n)
+bstream::sink::putn(const util::byte_type* src, util::size_type n)
 {
 	if (n > 0)
 	{
@@ -230,7 +230,7 @@ bstream::sink::putn(const byte_type* src, size_type n)
 				throw std::system_error{err};
 		}
 
-		if (n <= static_cast<size_type>(m_end - m_next))    // optimize for common case ( no overflow )
+		if (n <= static_cast<util::size_type>(m_end - m_next))    // optimize for common case ( no overflow )
 		{
 			if (!m_dirty)
 			{
@@ -257,8 +257,8 @@ bstream::sink::putn(const byte_type* src, size_type n)
 					m_dirty_start = m_next;
 					m_dirty       = true;
 				}
-				size_type chunk_size
-						= std::min(static_cast<size_type>(m_end - m_next), static_cast<size_type>(limit - p));
+				util::size_type chunk_size
+						= std::min(static_cast<util::size_type>(m_end - m_next), static_cast<util::size_type>(limit - p));
 				::memcpy(m_next, p, chunk_size);
 				p += chunk_size;
 				m_next += chunk_size;
@@ -269,7 +269,7 @@ bstream::sink::putn(const byte_type* src, size_type n)
 
 
 void
-bstream::sink::filln(const byte_type fill_byte, size_type n, std::error_code& err)
+bstream::sink::filln(const util::byte_type fill_byte, util::size_type n, std::error_code& err)
 {
 	err.clear();
 	if (n < 1)
@@ -289,10 +289,10 @@ exit:
 }
 
 void
-bstream::sink::really_fill(byte_type fill_byte, size_type n)
+bstream::sink::really_fill(util::byte_type fill_byte, util::size_type n)
 {
 	assert(n > 0);
-	if (n <= static_cast<size_type>(m_end - m_next))    // optimize for common case ( no overflow )
+	if (n <= static_cast<util::size_type>(m_end - m_next))    // optimize for common case ( no overflow )
 	{
 		if (!m_dirty)
 		{
@@ -304,7 +304,7 @@ bstream::sink::really_fill(byte_type fill_byte, size_type n)
 	}
 	else
 	{
-		size_type remaining = n;
+		util::size_type remaining = n;
 		while (remaining > 0)
 		{
 			if (m_base == nullptr || m_next >= m_end)
@@ -318,7 +318,7 @@ bstream::sink::really_fill(byte_type fill_byte, size_type n)
 				m_dirty_start = m_next;
 				m_dirty       = true;
 			}
-			size_type chunk_size = std::min(static_cast<size_type>(m_end - m_next), remaining);
+			util::size_type chunk_size = std::min(static_cast<util::size_type>(m_end - m_next), remaining);
 			::memset(m_next, fill_byte, chunk_size);
 			remaining -= chunk_size;
 			m_next += chunk_size;
@@ -327,7 +327,7 @@ bstream::sink::really_fill(byte_type fill_byte, size_type n)
 }
 
 void
-bstream::sink::filln(const byte_type fill_byte, size_type n)
+bstream::sink::filln(const util::byte_type fill_byte, util::size_type n)
 {
 	if (n > 0)
 	{
@@ -343,7 +343,7 @@ bstream::sink::filln(const byte_type fill_byte, size_type n)
 }
 
 
-// size_type
+// util::size_type
 // bstream::sink::size() const
 // {
 // 	// don't actually set_high_watermark here... at some point flush() will do that
@@ -351,10 +351,10 @@ bstream::sink::filln(const byte_type fill_byte, size_type n)
 // 	return ( m_dirty && ( ppos() > get_high_watermark() ) ) ? ppos() : get_high_watermark();
 // }
 
-position_type
-bstream::sink::new_position(offset_type offset, seek_anchor where) const
+util::position_type
+bstream::sink::new_position(util::offset_type offset, seek_anchor where) const
 {
-	position_type result = npos;
+	util::position_type result = util::npos;
 
 	switch (where)
 	{
@@ -374,8 +374,8 @@ bstream::sink::new_position(offset_type offset, seek_anchor where) const
 	return result;
 }
 
-position_type
-bstream::sink::position(offset_type offset, seek_anchor where)
+util::position_type
+bstream::sink::position(util::offset_type offset, seek_anchor where)
 {
 	auto new_pos = new_position(offset, where);
 
@@ -397,8 +397,8 @@ bstream::sink::position(offset_type offset, seek_anchor where)
 	return new_pos;
 }
 
-position_type
-bstream::sink::position(offset_type offset, seek_anchor where, std::error_code& err)
+util::position_type
+bstream::sink::position(util::offset_type offset, seek_anchor where, std::error_code& err)
 {
 	err.clear();
 
@@ -426,14 +426,14 @@ exit:
 	return new_pos;
 }
 
-position_type
+util::position_type
 bstream::sink::position() const
 {
 	return m_did_jump ? m_jump_to : ppos();
 }
 
 void
-bstream::sink::overflow(size_type requested, std::error_code& err)
+bstream::sink::overflow(util::size_type requested, std::error_code& err)
 {
 	flush(err);
 	if (err)
@@ -450,7 +450,7 @@ exit:
 }
 
 void
-bstream::sink::overflow(size_type requested)
+bstream::sink::overflow(util::size_type requested)
 {
 	flush();
 	std::error_code err;
@@ -496,7 +496,7 @@ bstream::sink::really_jump(std::error_code& err)
 }
 
 void
-bstream::sink::really_overflow(size_type, std::error_code& err)
+bstream::sink::really_overflow(util::size_type, std::error_code& err)
 {
 	err = make_error_code(std::errc::no_buffer_space);
 }
@@ -508,14 +508,14 @@ bstream::sink::really_flush(std::error_code& err)
 	assert(m_dirty && m_next > m_dirty_start);
 }
 
-size_type
+util::size_type
 bstream::sink::really_get_size() const
 {
 	return (m_dirty && (ppos() > get_high_watermark())) ? ppos() : get_high_watermark();
 }
 
 bool
-bstream::sink::is_valid_position(position_type pos) const
+bstream::sink::is_valid_position(util::position_type pos) const
 {
 	return (pos >= 0) && (pos <= (m_end - m_base));
 }

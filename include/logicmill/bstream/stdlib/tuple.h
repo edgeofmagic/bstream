@@ -37,7 +37,7 @@ namespace bstream
 template<class... Args>
 struct value_deserializer<
 		std::tuple<Args...>,
-		std::enable_if_t<traits::conjunction<is_ibstream_readable<Args>::value...>::value>>
+		std::enable_if_t<util::traits::conjunction<is_ibstream_readable<Args>::value...>::value>>
 {
 	using tuple_type = std::tuple<Args...>;
 

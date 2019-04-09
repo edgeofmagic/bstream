@@ -26,7 +26,7 @@
 #define LOGICMILL_BSTREAM_IBSTREAM_TRAITS_H
 
 #include <logicmill/bstream/fwd_decls.h>
-#include <logicmill/traits.h>
+#include <util/traits.h>
 #include <type_traits>
 
 namespace logicmill
@@ -66,7 +66,7 @@ namespace detail
 template<class T>
 static auto
 test_ref_deserializer(int)
-		-> traits::sfinae_true_if<decltype(ref_deserializer<T>::get(std::declval<ibstream&>(), std::declval<T&>()))>;
+		-> util::traits::sfinae_true_if<decltype(ref_deserializer<T>::get(std::declval<ibstream&>(), std::declval<T&>()))>;
 template<class>
 static auto
 test_ref_deserializer(long) -> std::false_type;
@@ -80,7 +80,7 @@ namespace detail
 {
 template<class T>
 static auto
-test_value_deserializer(int) -> traits::sfinae_true_if<decltype(value_deserializer<T>::get(std::declval<ibstream&>()))>;
+test_value_deserializer(int) -> util::traits::sfinae_true_if<decltype(value_deserializer<T>::get(std::declval<ibstream&>()))>;
 template<class>
 static auto
 test_value_deserializer(long) -> std::false_type;
@@ -94,7 +94,7 @@ namespace detail
 {
 template<class T>
 static auto
-test_ptr_deserializer(int) -> traits::sfinae_true_if<decltype(ptr_deserializer<T>::get(std::declval<ibstream&>()))>;
+test_ptr_deserializer(int) -> util::traits::sfinae_true_if<decltype(ptr_deserializer<T>::get(std::declval<ibstream&>()))>;
 template<class>
 static auto
 test_ptr_deserializer(long) -> std::false_type;
@@ -109,7 +109,7 @@ namespace detail
 template<class T>
 static auto
 test_shared_ptr_deserializer(int)
-		-> traits::sfinae_true_if<decltype(shared_ptr_deserializer<T>::get(std::declval<ibstream&>()))>;
+		-> util::traits::sfinae_true_if<decltype(shared_ptr_deserializer<T>::get(std::declval<ibstream&>()))>;
 template<class>
 static auto
 test_shared_ptr_deserializer(long) -> std::false_type;
@@ -124,7 +124,7 @@ namespace detail
 template<class T>
 static auto
 test_deserialize_method(int)
-		-> traits::sfinae_true_if<decltype(std::declval<T>().deserialize(std::declval<ibstream&>()))>;
+		-> util::traits::sfinae_true_if<decltype(std::declval<T>().deserialize(std::declval<ibstream&>()))>;
 template<class>
 static auto
 test_deserialize_method(long) -> std::false_type;
@@ -139,7 +139,7 @@ namespace detail
 template<class T>
 static auto
 test_ibstream_extraction_operator(int)
-		-> traits::sfinae_true_if<decltype(std::declval<ibstream&>() >> std::declval<T&>())>;
+		-> util::traits::sfinae_true_if<decltype(std::declval<ibstream&>() >> std::declval<T&>())>;
 template<class>
 static auto
 test_ibstream_extraction_operator(long) -> std::false_type;

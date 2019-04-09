@@ -41,31 +41,31 @@ class source_test_probe
 public:
 	source_test_probe(bstream::source& target) : m_target{target} {}
 
-	position_type
+	util::position_type
 	base_offset()
 	{
 		return m_target.m_base_offset;
 	}
 
-	position_type
+	util::position_type
 	pos()
 	{
 		return m_target.gpos();
 	}
 
-	const byte_type*
+	const util::byte_type*
 	base()
 	{
 		return m_target.m_base;
 	}
 
-	const byte_type*
+	const util::byte_type*
 	next()
 	{
 		return m_target.m_next;
 	}
 
-	const byte_type*
+	const util::byte_type*
 	end()
 	{
 		return m_target.m_end;
@@ -80,13 +80,13 @@ class sink_test_probe
 public:
 	sink_test_probe(bstream::sink& target) : m_target{target} {}
 
-	position_type
+	util::position_type
 	base_offset()
 	{
 		return m_target.m_base_offset;
 	}
 
-	position_type
+	util::position_type
 	hwm()
 	{
 		return m_target.m_high_watermark;
@@ -98,13 +98,13 @@ public:
 		return m_target.m_dirty;
 	}
 
-	byte_type*
+	util::byte_type*
 	dirty_start()
 	{
 		return m_target.m_dirty_start;
 	}
 
-	size_type
+	util::size_type
 	dirty_start_position()
 	{
 		return m_target.m_dirty_start - m_target.m_base;
@@ -116,31 +116,31 @@ public:
 		return m_target.m_did_jump;
 	}
 
-	size_type
+	util::size_type
 	jump_to()
 	{
 		return m_target.m_jump_to;
 	}
 
-	position_type
+	util::position_type
 	pos()
 	{
 		return m_target.ppos();
 	}
 
-	byte_type*
+	util::byte_type*
 	base()
 	{
 		return m_target.m_base;
 	}
 
-	byte_type*
+	util::byte_type*
 	next()
 	{
 		return m_target.m_next;
 	}
 
-	byte_type*
+	util::byte_type*
 	end()
 	{
 		return m_target.m_end;

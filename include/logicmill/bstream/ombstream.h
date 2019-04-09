@@ -48,7 +48,7 @@ public:
 		: obstream{std::make_unique<buffer::sink>(std::move(buf), context.byte_order()), context}
 	{}
 
-	ombstream(size_type size, context_base const& context = get_default_context())
+	ombstream(util::size_type size, context_base const& context = get_default_context())
 		: ombstream(std::make_unique<buffer::sink>(size, context.byte_order()), context)
 	{}
 

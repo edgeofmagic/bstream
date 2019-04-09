@@ -28,7 +28,7 @@
 #include <logicmill/laps/channel_anchor.h>
 #include <logicmill/laps/driver.h>
 #include <logicmill/laps/framer.h>
-#include <logicmill/util/buffer.h>
+#include <util/buffer.h>
 
 using namespace logicmill;
 using namespace async;

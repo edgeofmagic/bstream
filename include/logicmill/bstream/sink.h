@@ -27,7 +27,7 @@
 
 #include <boost/endian/conversion.hpp>
 #include <logicmill/bstream/types.h>
-#include <logicmill/util/buffer.h>
+#include <util/buffer.h>
 #include <system_error>
 
 namespace bend = boost::endian;
@@ -142,7 +142,7 @@ class sink
 public:
 	friend class detail::sink_test_probe;
 
-	sink(byte_type* data, size_type size, byte_order order = byte_order::big_endian);
+	sink(util::byte_type* data, util::size_type size, byte_order order = byte_order::big_endian);
 
 	sink(sink const&) = delete;
 	sink&
@@ -167,16 +167,16 @@ public:
 	flush();
 
 	void
-	put(byte_type byte, std::error_code& err);
+	put(util::byte_type byte, std::error_code& err);
 
 	void
-	put(byte_type byte);
+	put(util::byte_type byte);
 
 	void
-	putn(const byte_type* src, size_type n, std::error_code& err);
+	putn(const util::byte_type* src, util::size_type n, std::error_code& err);
 
 	void
-	putn(const byte_type* src, size_type n);
+	putn(const util::byte_type* src, util::size_type n);
 
 	void
 	putn(util::buffer const& buf)
@@ -211,7 +211,7 @@ public:
 		constexpr std::size_t usize = sizeof(U);
 		using ctype                 = typename detail::canonical_type<usize>::type;
 
-		using byte_vec = byte_type[usize];
+		using byte_vec = util::byte_type[usize];
 
 		if (m_did_jump)
 		{
@@ -244,7 +244,7 @@ public:
 		{
 			ctype cval = m_reverse ? bend::endian_reverse(reinterpret_cast<ctype&>(value))
 								   : reinterpret_cast<ctype&>(value);
-			putn(reinterpret_cast<byte_type*>(&cval), usize);
+			putn(reinterpret_cast<util::byte_type*>(&cval), usize);
 		}
 	}
 
@@ -256,7 +256,7 @@ public:
 		constexpr std::size_t usize = sizeof(U);
 		using ctype                 = typename detail::canonical_type<usize>::type;
 
-		using byte_vec = byte_type[usize];
+		using byte_vec = util::byte_type[usize];
 
 		if (m_did_jump)
 		{
@@ -288,7 +288,7 @@ public:
 		{
 			ctype cval = m_reverse ? bend::endian_reverse(reinterpret_cast<ctype&>(value))
 								   : reinterpret_cast<ctype&>(value);
-			putn(reinterpret_cast<byte_type*>(&cval), usize, err);
+			putn(reinterpret_cast<util::byte_type*>(&cval), usize, err);
 		}
 
 	exit:
@@ -302,7 +302,7 @@ public:
 		constexpr std::size_t usize = sizeof(U);
 		using ctype                 = typename detail::canonical_type<usize>::type;
 
-		using byte_vec = byte_type[usize];
+		using byte_vec = util::byte_type[usize];
 
 		if (m_did_jump)
 		{
@@ -339,7 +339,7 @@ public:
 		{
 			ctype cval = m_reverse ? bend::endian_reverse(reinterpret_cast<ctype&>(value))
 								   : reinterpret_cast<ctype&>(value);
-			putn(reinterpret_cast<byte_type*>(&cval), usize);
+			putn(reinterpret_cast<util::byte_type*>(&cval), usize);
 		}
 	}
 
@@ -351,7 +351,7 @@ public:
 		constexpr std::size_t usize = sizeof(U);
 		using ctype                 = typename detail::canonical_type<usize>::type;
 
-		using byte_vec = byte_type[usize];
+		using byte_vec = util::byte_type[usize];
 
 		if (m_did_jump)
 		{
@@ -387,7 +387,7 @@ public:
 		{
 			ctype cval = m_reverse ? bend::endian_reverse(reinterpret_cast<ctype&>(value))
 								   : reinterpret_cast<ctype&>(value);
-			putn(reinterpret_cast<byte_type*>(&cval), usize, err);
+			putn(reinterpret_cast<util::byte_type*>(&cval), usize, err);
 		}
 	exit:
 		return;
@@ -400,7 +400,7 @@ public:
 		constexpr std::size_t usize = sizeof(U);
 		using ctype                 = typename detail::canonical_type<usize>::type;
 
-		using byte_vec = byte_type[usize];
+		using byte_vec = util::byte_type[usize];
 
 		if (m_did_jump)
 		{
@@ -445,7 +445,7 @@ public:
 		{
 			ctype cval = m_reverse ? bend::endian_reverse(reinterpret_cast<ctype&>(value))
 								   : reinterpret_cast<ctype&>(value);
-			putn(reinterpret_cast<byte_type*>(&cval), usize);
+			putn(reinterpret_cast<util::byte_type*>(&cval), usize);
 		}
 	}
 
@@ -457,7 +457,7 @@ public:
 		constexpr std::size_t usize = sizeof(U);
 		using ctype                 = typename detail::canonical_type<usize>::type;
 
-		using byte_vec = byte_type[usize];
+		using byte_vec = util::byte_type[usize];
 
 		if (m_did_jump)
 		{
@@ -501,40 +501,40 @@ public:
 		{
 			ctype cval = m_reverse ? bend::endian_reverse(reinterpret_cast<ctype&>(value))
 								   : reinterpret_cast<ctype&>(value);
-			putn(reinterpret_cast<byte_type*>(&cval), usize, err);
+			putn(reinterpret_cast<util::byte_type*>(&cval), usize, err);
 		}
 	exit:
 		return;
 	}
 
 	void
-	filln(const byte_type fill_byte, size_type n, std::error_code& err);
+	filln(const util::byte_type fill_byte, util::size_type n, std::error_code& err);
 
 	void
-	filln(const byte_type fill_byte, size_type n);
+	filln(const util::byte_type fill_byte, util::size_type n);
 
-	position_type
-	position(position_type pos, std::error_code& err)
+	util::position_type
+	position(util::position_type pos, std::error_code& err)
 	{
 		return position(pos, bstream::seek_anchor::begin, err);
 	}
 
-	position_type
-	position(position_type pos)
+	util::position_type
+	position(util::position_type pos)
 	{
 		return position(pos, bstream::seek_anchor::begin);
 	}
 
-	position_type
-	position(offset_type offset, seek_anchor where, std::error_code& err);
+	util::position_type
+	position(util::offset_type offset, seek_anchor where, std::error_code& err);
 
-	position_type
-	position(offset_type offset, seek_anchor where);
+	util::position_type
+	position(util::offset_type offset, seek_anchor where);
 
-	position_type
+	util::position_type
 	position() const;
 
-	size_type
+	util::size_type
 	size() const
 	{
 		return really_get_size();
@@ -542,7 +542,7 @@ public:
 
 protected:
 	void
-	set_ptrs(byte_type* base, byte_type* next, byte_type* end)
+	set_ptrs(util::byte_type* base, util::byte_type* next, util::byte_type* end)
 	{
 		m_base = base;
 		m_next = next;
@@ -550,18 +550,18 @@ protected:
 	}
 
 	void
-	overflow(size_type requested, std::error_code& err);
+	overflow(util::size_type requested, std::error_code& err);
 
 	void
-	overflow(size_type requested);
+	overflow(util::size_type requested);
 
-	position_type
+	util::position_type
 	get_high_watermark() const noexcept
 	{
 		return m_high_watermark;
 	}
 
-	position_type
+	util::position_type
 	set_high_watermark()
 	{
 		if (m_dirty && (ppos() > m_high_watermark))
@@ -572,7 +572,7 @@ protected:
 	}
 
 	void
-	force_high_watermark(position_type hwm)
+	force_high_watermark(util::position_type hwm)
 	{
 		m_high_watermark = hwm;
 	}
@@ -583,42 +583,42 @@ protected:
 		m_high_watermark = 0;
 	}
 
-	position_type
+	util::position_type
 	ppos() const noexcept
 	{
 		return m_base_offset + (m_next - m_base);
 	}
 
 	void
-	really_fill(byte_type fill_byte, size_type n);
+	really_fill(util::byte_type fill_byte, util::size_type n);
 
-	position_type
-	new_position(offset_type offset, seek_anchor where) const;
+	util::position_type
+	new_position(util::offset_type offset, seek_anchor where) const;
 
 protected:    // to be overridden by derived classes
 	virtual void
 	really_jump(std::error_code& err);
 
 	virtual bool
-	is_valid_position(position_type pos) const;
+	is_valid_position(util::position_type pos) const;
 
 	virtual void
-	really_overflow(size_type, std::error_code& err);
+	really_overflow(util::size_type, std::error_code& err);
 
 	virtual void
 	really_flush(std::error_code& err);
 
-	virtual size_type
+	virtual util::size_type
 	really_get_size() const;
 
 protected:
-	position_type m_base_offset;
-	position_type m_high_watermark;
-	position_type m_jump_to;
-	byte_type*    m_base;
-	byte_type*    m_next;
-	byte_type*    m_end;
-	byte_type*    m_dirty_start;
+	util::position_type m_base_offset;
+	util::position_type m_high_watermark;
+	util::position_type m_jump_to;
+	util::byte_type*    m_base;
+	util::byte_type*    m_next;
+	util::byte_type*    m_end;
+	util::byte_type*    m_dirty_start;
 	bool          m_dirty;
 	bool          m_did_jump;
 	bool          m_reverse;

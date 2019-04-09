@@ -30,7 +30,7 @@
 #include <logicmill/bstream/error.h>
 #include <logicmill/bstream/source.h>
 #include <logicmill/bstream/types.h>
-#include <logicmill/util/buffer.h>
+#include <util/buffer.h>
 #include <vector>
 
 namespace logicmill
@@ -98,7 +98,7 @@ public:
 	source(std::deque<util::const_buffer> const& bufs, byte_order order = byte_order::big_endian)
 		: base{order}, m_bufs{}, m_size{0}, m_current{0}, m_offsets(bufs.size(), 0)
 	{
-		size_type index = 0;
+		util::size_type index = 0;
 		for (auto it = bufs.begin(); it != bufs.end(); ++it)
 		{
 			m_offsets[index++] = m_size;
@@ -114,7 +114,7 @@ public:
 	source(std::deque<util::const_buffer>&& bufs, byte_order order = byte_order::big_endian)
 		: base{order}, m_bufs{}, m_size{0}, m_current{0}, m_offsets(bufs.size(), 0)
 	{
-		size_type index = 0;
+		util::size_type index = 0;
 		using iter_type = std::deque<util::const_buffer>::iterator;
 		for (auto it = bufs.begin(); it != bufs.end(); ++it)
 		{
@@ -133,7 +133,7 @@ public:
 	source(std::deque<util::mutable_buffer>&& bufs, byte_order order = byte_order::big_endian)
 		: base{order}, m_bufs{}, m_size{0}, m_current{0}, m_offsets(bufs.size(), 0)
 	{
-		size_type index = 0;
+		util::size_type index = 0;
 		using iter_type = std::deque<util::mutable_buffer>::iterator;
 		for (auto it = bufs.begin(); it != bufs.end(); ++it)
 		{
@@ -158,7 +158,7 @@ public:
 		m_current = 0;
 		m_offsets.resize(bufs.size(), 0);
 
-		size_type index = 0;
+		util::size_type index = 0;
 		using iter_type = std::deque<util::mutable_buffer>::iterator;
 		for (auto it = bufs.begin(); it != bufs.end(); ++it)
 		{
@@ -183,7 +183,7 @@ public:
 		m_current = 0;
 		m_offsets.resize(bufs.size(), 0);
 
-		size_type index = 0;
+		util::size_type index = 0;
 		using iter_type = std::deque<util::const_buffer>::iterator;
 		for (auto it = bufs.begin(); it != bufs.end(); ++it)
 		{
@@ -337,8 +337,8 @@ public:
 	void
 	refresh_offsets()
 	{
-		size_type index = 0;
-		size_type size  = 0;
+		util::size_type index = 0;
+		util::size_type size  = 0;
 		using iter_type = typename std::deque<buffer_type>::iterator;
 		for (auto it = m_bufs.begin(); it != m_bufs.end(); ++it)
 		{
@@ -366,35 +366,35 @@ public:
 	}
 
 	virtual util::shared_buffer
-	get_shared_slice(size_type n, std::error_code& err) override;
+	get_shared_slice(util::size_type n, std::error_code& err) override;
 
 	virtual util::shared_buffer
-	get_shared_slice(size_type n) override;
+	get_shared_slice(util::size_type n) override;
 
 	virtual util::const_buffer
-	get_slice(size_type n, std::error_code& err) override;
+	get_slice(util::size_type n, std::error_code& err) override;
 
 	virtual util::const_buffer
-	get_slice(size_type n) override;
+	get_slice(util::size_type n) override;
 
 	std::deque<util::shared_buffer>
-	get_segmented_slice(size_type n);
+	get_segmented_slice(util::size_type n);
 
 	std::deque<util::shared_buffer>
-	get_segmented_slice(size_type n, std::error_code& err);
+	get_segmented_slice(util::size_type n, std::error_code& err);
 
-	virtual size_type
+	virtual util::size_type
 	really_get_size() const override
 	{
 		return m_size;
 	}
 
-	virtual position_type
-	really_seek(position_type pos, std::error_code& err) override
+	virtual util::position_type
+	really_seek(util::position_type pos, std::error_code& err) override
 	{
 		err.clear();
-		size_type left{0};
-		size_type right{m_bufs.size()};
+		util::size_type left{0};
+		util::size_type right{m_bufs.size()};
 		bool      found{false};
 		while (left <= right)
 		{
@@ -422,17 +422,17 @@ public:
 		return pos;
 	}
 
-	virtual position_type
+	virtual util::position_type
 	really_get_position() const override
 	{
 		return gpos();
 	}
 
-	virtual size_type
+	virtual util::size_type
 	really_underflow(std::error_code& err) override
 	{
 		err.clear();
-		size_type result = 0;
+		util::size_type result = 0;
 		if (m_current < m_bufs.size() - 1)
 		{
 			++m_current;
@@ -457,9 +457,9 @@ public:
 
 protected:
 	std::deque<Buffer>    m_bufs;
-	size_type             m_size;
-	size_type             m_current;
-	std::deque<size_type> m_offsets;
+	util::size_type             m_size;
+	util::size_type             m_current;
+	std::deque<util::size_type> m_offsets;
 };
 
 
@@ -467,7 +467,7 @@ template<>
 inline source<util::const_buffer>::source(std::deque<util::shared_buffer> const& bufs, byte_order order)
 	: base{order}, m_bufs{}, m_size{0}, m_current{0}, m_offsets(bufs.size(), 0)
 {
-	size_type index = 0;
+	util::size_type index = 0;
 	for (auto it = bufs.begin(); it != bufs.end(); ++it)
 	{
 		m_offsets[index++] = m_size;
@@ -482,7 +482,7 @@ inline source<util::const_buffer>::source(std::deque<util::shared_buffer>&& bufs
 	: base{order}, m_bufs{}, m_size{0}, m_current{0}, m_offsets(bufs.size(), 0)
 // construct by copy (as base type buffer); can't move util::shared_buffer to util::const_buffer
 {
-	size_type index = 0;
+	util::size_type index = 0;
 	for (auto it = bufs.begin(); it != bufs.end(); ++it)
 	{
 		m_offsets[index++] = m_size;
@@ -496,7 +496,7 @@ template<>
 inline source<util::shared_buffer>::source(std::deque<util::shared_buffer> const& bufs, byte_order order)
 	: base{order}, m_bufs{}, m_size{0}, m_current{0}, m_offsets(bufs.size(), 0)
 {
-	size_type index = 0;
+	util::size_type index = 0;
 	for (auto it = bufs.begin(); it != bufs.end(); ++it)
 	{
 		m_offsets[index++] = m_size;
@@ -510,7 +510,7 @@ template<>
 inline source<util::shared_buffer>::source(std::deque<util::shared_buffer>&& bufs, byte_order order)
 	: base{order}, m_bufs{}, m_size{0}, m_current{0}, m_offsets(bufs.size(), 0)
 {
-	size_type index = 0;
+	util::size_type index = 0;
 	using iter_type = std::deque<util::shared_buffer>::iterator;
 	for (auto it = bufs.begin(); it != bufs.end(); ++it)
 	{
@@ -553,21 +553,21 @@ inline source<util::const_buffer>::source(util::shared_buffer&& buf, byte_order 
 
 template<>
 inline util::shared_buffer
-source<util::const_buffer>::get_shared_slice(size_type n, std::error_code& err)
+source<util::const_buffer>::get_shared_slice(util::size_type n, std::error_code& err)
 {
 	return base::get_shared_slice(n, err);
 }
 
 template<>
 inline util::shared_buffer
-source<util::const_buffer>::get_shared_slice(size_type n)
+source<util::const_buffer>::get_shared_slice(util::size_type n)
 {
 	return base::get_shared_slice(n);
 }
 
 template<>
 inline util::shared_buffer
-source<util::shared_buffer>::get_shared_slice(size_type n, std::error_code& err)
+source<util::shared_buffer>::get_shared_slice(util::size_type n, std::error_code& err)
 {
 	err.clear();
 	util::shared_buffer result;
@@ -591,7 +591,7 @@ source<util::shared_buffer>::get_shared_slice(size_type n, std::error_code& err)
 
 	if (n <= m_end - m_next)
 	{
-		result = util::shared_buffer{m_bufs[m_current], static_cast<position_type>(m_next - m_base), n, err};
+		result = util::shared_buffer{m_bufs[m_current], static_cast<util::position_type>(m_next - m_base), n, err};
 		if (!err)
 		{
 			gbump(n);
@@ -608,7 +608,7 @@ exit:
 
 template<>
 inline util::shared_buffer
-source<util::shared_buffer>::get_shared_slice(size_type n)
+source<util::shared_buffer>::get_shared_slice(util::size_type n)
 {
 	util::shared_buffer result;
 
@@ -631,7 +631,7 @@ source<util::shared_buffer>::get_shared_slice(size_type n)
 
 		if (n <= m_end - m_next)
 		{
-			result = util::shared_buffer{m_bufs[m_current], static_cast<position_type>(m_next - m_base), n};
+			result = util::shared_buffer{m_bufs[m_current], static_cast<util::position_type>(m_next - m_base), n};
 			gbump(n);
 		}
 		else
@@ -644,35 +644,35 @@ source<util::shared_buffer>::get_shared_slice(size_type n)
 
 template<>
 inline util::const_buffer
-source<util::const_buffer>::get_slice(size_type n, std::error_code& err)
+source<util::const_buffer>::get_slice(util::size_type n, std::error_code& err)
 {
 	return base::get_slice(n, err);
 }
 
 template<>
 inline util::const_buffer
-source<util::const_buffer>::get_slice(size_type n)
+source<util::const_buffer>::get_slice(util::size_type n)
 {
 	return base::get_slice(n);
 }
 
 template<>
 inline util::const_buffer
-source<util::shared_buffer>::get_slice(size_type n, std::error_code& err)
+source<util::shared_buffer>::get_slice(util::size_type n, std::error_code& err)
 {
 	return base::get_slice(n, err);
 }
 
 template<>
 inline util::const_buffer
-source<util::shared_buffer>::get_slice(size_type n)
+source<util::shared_buffer>::get_slice(util::size_type n)
 {
 	return base::get_slice(n);
 }
 
 template<>
 inline std::deque<util::shared_buffer>
-source<util::shared_buffer>::get_segmented_slice(size_type n, std::error_code& err)
+source<util::shared_buffer>::get_segmented_slice(util::size_type n, std::error_code& err)
 {
 	err.clear();
 	std::deque<util::shared_buffer> result;
@@ -713,7 +713,7 @@ exit:
 
 template<>
 inline std::deque<util::shared_buffer>
-source<util::shared_buffer>::get_segmented_slice(size_type n)
+source<util::shared_buffer>::get_segmented_slice(util::size_type n)
 {
 	std::deque<util::shared_buffer> result;
 	std::error_code                 err;
@@ -727,7 +727,7 @@ source<util::shared_buffer>::get_segmented_slice(size_type n)
 
 template<>
 inline std::deque<util::shared_buffer>
-source<util::const_buffer>::get_segmented_slice(size_type n)
+source<util::const_buffer>::get_segmented_slice(util::size_type n)
 {
 	std::deque<util::shared_buffer> result;
 	result.emplace_back(util::shared_buffer{base::get_slice(n)});
@@ -736,7 +736,7 @@ source<util::const_buffer>::get_segmented_slice(size_type n)
 
 template<>
 inline std::deque<util::shared_buffer>
-source<util::const_buffer>::get_segmented_slice(size_type n, std::error_code& err)
+source<util::const_buffer>::get_segmented_slice(util::size_type n, std::error_code& err)
 {
 	std::deque<util::shared_buffer> result;
 	result.emplace_back(util::shared_buffer{base::get_slice(n, err)});
@@ -745,7 +745,7 @@ source<util::const_buffer>::get_segmented_slice(size_type n, std::error_code& er
 
 template<>
 inline std::deque<util::shared_buffer>
-source<util::mutable_buffer>::get_segmented_slice(size_type n)
+source<util::mutable_buffer>::get_segmented_slice(util::size_type n)
 {
 	std::deque<util::shared_buffer> result;
 	result.emplace_back(util::shared_buffer{base::get_slice(n)});
@@ -754,7 +754,7 @@ source<util::mutable_buffer>::get_segmented_slice(size_type n)
 
 template<>
 inline std::deque<util::shared_buffer>
-source<util::mutable_buffer>::get_segmented_slice(size_type n, std::error_code& err)
+source<util::mutable_buffer>::get_segmented_slice(util::size_type n, std::error_code& err)
 {
 	std::deque<util::shared_buffer> result;
 	result.emplace_back(util::shared_buffer{base::get_slice(n, err)});
@@ -772,7 +772,7 @@ source<util::mutable_buffer>::use(std::deque<util::shared_buffer>&& bufs)
 	m_current = 0;
 	m_offsets.resize(bufs.size(), 0);
 
-	size_type index = 0;
+	util::size_type index = 0;
 	for (auto it = bufs.begin(); it != bufs.end(); ++it)
 	{
 		m_offsets[index++] = m_size;
@@ -793,7 +793,7 @@ source<util::const_buffer>::use(std::deque<util::shared_buffer>&& bufs)
 	m_current = 0;
 	m_offsets.resize(bufs.size(), 0);
 
-	size_type index = 0;
+	util::size_type index = 0;
 	for (auto it = bufs.begin(); it != bufs.end(); ++it)
 	{
 		m_offsets[index++] = m_size;
@@ -814,7 +814,7 @@ source<util::shared_buffer>::use(std::deque<util::shared_buffer>&& bufs)
 	m_current = 0;
 	m_offsets.resize(bufs.size(), 0);
 
-	size_type index = 0;
+	util::size_type index = 0;
 	using iter_type = std::deque<util::shared_buffer>::iterator;
 	for (auto it = bufs.begin(); it != bufs.end(); ++it)
 	{

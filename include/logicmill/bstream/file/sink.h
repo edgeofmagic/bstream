@@ -26,7 +26,7 @@
 #define LOGICMILL_BSTREAM_FILE_SINK_H
 
 #include <logicmill/bstream/sink.h>
-#include <logicmill/util/buffer.h>
+#include <util/buffer.h>
 
 #ifndef LOGICMILL_BSTREAM_DEFAULT_FILE_BUFFER_SIZE
 #define LOGICMILL_BSTREAM_DEFAULT_FILE_BUFFER_SIZE 16384UL
@@ -55,17 +55,17 @@ public:
 
 	sink(sink&& rhs);
 
-	sink(std::string const& filename, open_mode mode, size_type buffer_size, byte_order order, std::error_code& err);
+	sink(std::string const& filename, open_mode mode, util::size_type buffer_size, byte_order order, std::error_code& err);
 
-	sink(std::string const& filename, open_mode mode, size_type buffer_size, byte_order order);
+	sink(std::string const& filename, open_mode mode, util::size_type buffer_size, byte_order order);
 
-	sink(std::string const& filename, open_mode mode, size_type buffer_size, std::error_code& err);
+	sink(std::string const& filename, open_mode mode, util::size_type buffer_size, std::error_code& err);
 
-	sink(std::string const& filename, open_mode mode, size_type buffer_size);
+	sink(std::string const& filename, open_mode mode, util::size_type buffer_size);
 
 
 	sink(open_mode  mode        = default_mode,
-		 size_type  buffer_size = LOGICMILL_BSTREAM_DEFAULT_FILE_BUFFER_SIZE,
+		 util::size_type  buffer_size = LOGICMILL_BSTREAM_DEFAULT_FILE_BUFFER_SIZE,
 		 byte_order order       = byte_order::big_endian);
 
 
@@ -145,10 +145,10 @@ public:
 		return m_filename;
 	}
 
-	position_type
+	util::position_type
 	truncate(std::error_code& err);
 
-	position_type
+	util::position_type
 	truncate();
 
 protected:
@@ -156,13 +156,13 @@ protected:
 	really_flush(std::error_code& err) override;
 
 	virtual bool
-	is_valid_position(position_type pos) const override;
+	is_valid_position(util::position_type pos) const override;
 
 	virtual void
 	really_jump(std::error_code& err) override;
 
 	virtual void
-	really_overflow(size_type, std::error_code& err) override;
+	really_overflow(util::size_type, std::error_code& err) override;
 
 private:
 	static bool
@@ -174,7 +174,7 @@ private:
 	void
 	reset_ptrs()
 	{
-		byte_type* base = m_buf.data();
+		util::byte_type* base = m_buf.data();
 		set_ptrs(base, base, base + m_buf.capacity());
 	}
 

@@ -55,7 +55,7 @@
 #include <boost/predef.h>
 
 #include <logicmill/bstream/base_classes.h>
-#include <logicmill/util/preprocessor.h>
+#include <util/preprocessor.h>
 
 // disable warning for missing overrides;
 // see definitions for BSTRM_POLY_SERIALIZE_METHOD_() and

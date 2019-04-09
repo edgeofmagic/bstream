@@ -50,18 +50,18 @@ public:
 
 	friend class file::detail::source_test_probe;
 
-	source(size_type  buffer_size = LOGICMILL_BSTREAM_DEFAULT_FILE_BUFFER_SIZE,
+	source(util::size_type  buffer_size = LOGICMILL_BSTREAM_DEFAULT_FILE_BUFFER_SIZE,
 		   byte_order order       = byte_order::big_endian);
 
 	source(std::string const& filename,
 		   std::error_code&   err,
 		   int                flag_overrides = 0,
-		   size_type          buffer_size    = LOGICMILL_BSTREAM_DEFAULT_FILE_BUFFER_SIZE,
+		   util::size_type          buffer_size    = LOGICMILL_BSTREAM_DEFAULT_FILE_BUFFER_SIZE,
 		   byte_order         order          = byte_order::big_endian);
 
 	source(std::string const& filename,
 		   int                flag_overrides = 0,
-		   size_type          buffer_size    = LOGICMILL_BSTREAM_DEFAULT_FILE_BUFFER_SIZE,
+		   util::size_type          buffer_size    = LOGICMILL_BSTREAM_DEFAULT_FILE_BUFFER_SIZE,
 		   byte_order         order          = byte_order::big_endian);
 
 	void
@@ -83,26 +83,26 @@ public:
 	close();
 
 protected:
-	virtual size_type
+	virtual util::size_type
 	really_underflow(std::error_code& err) override;
 
-	virtual size_type
+	virtual util::size_type
 	really_get_size() const override;
 
-	virtual position_type
-	really_seek(position_type pos, std::error_code& err) override;
+	virtual util::position_type
+	really_seek(util::position_type pos, std::error_code& err) override;
 
-	virtual position_type
+	virtual util::position_type
 	really_get_position() const override;
 
 protected:
-	size_type
+	util::size_type
 	load_buffer(std::error_code& err);
 
 	void
 	reset_ptrs()
 	{
-		const byte_type* base = m_buf.data();
+		const util::byte_type* base = m_buf.data();
 		set_ptrs(base, base, base);
 	}
 
@@ -114,7 +114,7 @@ protected:
 	bool                 m_is_open;
 	int                  m_flags;
 	int                  m_fd;
-	size_type            m_size;
+	util::size_type            m_size;
 };
 
 }    // namespace file

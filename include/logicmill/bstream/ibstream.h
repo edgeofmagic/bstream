@@ -112,40 +112,40 @@ public:
 		return std::move(m_source);    // hope this is set to null
 	}
 
-	size_type
+	util::size_type
 	size() const
 	{
-		return static_cast<size_type>(m_source->size());
+		return static_cast<util::size_type>(m_source->size());
 	}
 
-	position_type
+	util::position_type
 	position() const
 	{
-		return static_cast<position_type>(m_source->position());
+		return static_cast<util::position_type>(m_source->position());
 	}
 
-	position_type
-	position(position_type pos)
+	util::position_type
+	position(util::position_type pos)
 	{
-		return static_cast<position_type>(m_source->position(pos));
+		return static_cast<util::position_type>(m_source->position(pos));
 	}
 
-	position_type
-	position(position_type pos, std::error_code& err)
+	util::position_type
+	position(util::position_type pos, std::error_code& err)
 	{
-		return static_cast<position_type>(m_source->position(pos, err));
+		return static_cast<util::position_type>(m_source->position(pos, err));
 	}
 
-	position_type
-	position(offset_type offset, seek_anchor where)
+	util::position_type
+	position(util::offset_type offset, seek_anchor where)
 	{
-		return static_cast<position_type>(m_source->position(offset, where));
+		return static_cast<util::position_type>(m_source->position(offset, where));
 	}
 
-	position_type
-	position(offset_type offset, seek_anchor where, std::error_code& err)
+	util::position_type
+	position(util::offset_type offset, seek_anchor where, std::error_code& err)
 	{
-		return static_cast<position_type>(m_source->position(offset, where, err));
+		return static_cast<util::position_type>(m_source->position(offset, where, err));
 	}
 	void
 	rewind()
@@ -159,25 +159,25 @@ public:
 		position(0, err);
 	}
 
-	byte_type
+	util::byte_type
 	get()
 	{
 		return m_source->get();
 	}
 
-	byte_type
+	util::byte_type
 	get(std::error_code& err)
 	{
 		return m_source->get(err);
 	}
 
-	byte_type
+	util::byte_type
 	peek()
 	{
 		return m_source->peek();
 	}
 
-	byte_type
+	util::byte_type
 	peek(std::error_code& err)
 	{
 		return m_source->peek(err);
@@ -212,37 +212,37 @@ public:
 	}
 
 	util::shared_buffer
-	get_shared_slice(size_type nbytes)
+	get_shared_slice(util::size_type nbytes)
 	{
 		return m_source->get_shared_slice(nbytes);
 	}
 
 	util::shared_buffer
-	get_shared_slice(size_type nbytes, std::error_code& err)
+	get_shared_slice(util::size_type nbytes, std::error_code& err)
 	{
 		return m_source->get_shared_slice(nbytes, err);
 	}
 
 	util::const_buffer
-	get_slice(size_type nbytes)
+	get_slice(util::size_type nbytes)
 	{
 		return m_source->get_slice(nbytes);
 	}
 
 	util::const_buffer
-	get_slice(size_type nbytes, std::error_code& err)
+	get_slice(util::size_type nbytes, std::error_code& err)
 	{
 		return m_source->get_slice(nbytes, err);
 	}
 
-	size_type
-	getn(byte_type* dst, size_type nbytes)
+	util::size_type
+	getn(util::byte_type* dst, util::size_type nbytes)
 	{
 		return m_source->getn(dst, nbytes);
 	}
 
-	size_type
-	getn(byte_type* dst, size_type nbytes, std::error_code& err)
+	util::size_type
+	getn(util::byte_type* dst, util::size_type nbytes, std::error_code& err)
 	{
 		return m_source->getn(dst, nbytes, err);
 	}
@@ -1150,7 +1150,7 @@ struct value_deserializer<std::string>
 					throw std::system_error{make_error_code(bstream::errc::val_deser_type_error_string)};
 			}
 		}
-		byte_type strchars[length];
+		util::byte_type strchars[length];
 		is.getn(strchars, length);
 		return std::string{reinterpret_cast<char*>(&strchars), length};
 	}

@@ -27,7 +27,7 @@
 
 #include <logicmill/armi/interface_stub_base.h>
 #include <logicmill/armi/member_func_stub.h>
-#include <logicmill/traits.h>
+#include <util/traits.h>
 #include <memory>
 #include <vector>
 
@@ -78,7 +78,7 @@ protected:
 				new armi::member_func_stub<
 						server_stub_base_type,
 						decltype(args),
-						typename traits::remove_member_func_cv_noexcept<decltype(args)>::type>(
+						typename util::traits::remove_member_func_cv_noexcept<decltype(args)>::type>(
 						server, args, Ns))...);
 	}
 

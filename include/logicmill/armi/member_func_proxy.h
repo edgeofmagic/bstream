@@ -30,7 +30,7 @@
 #include <logicmill/armi/reply_handler.h>
 #include <logicmill/armi/types.h>
 #include <logicmill/bstream/ombstream.h>
-#include <logicmill/util/promise.h>
+#include <util/promise.h>
 #include <type_traits>
 
 namespace logicmill
@@ -115,13 +115,13 @@ private:
 
 template<class ClientProxyBase, class MemberFuncPtr>
 class stripped_member_func_proxy
-	: public member_func_proxy<ClientProxyBase, typename traits::remove_member_func_cv_noexcept<MemberFuncPtr>::type>
+	: public member_func_proxy<ClientProxyBase, typename util::traits::remove_member_func_cv_noexcept<MemberFuncPtr>::type>
 {
 public:
 	using client_proxy_base_type = ClientProxyBase;
 	using base                     = member_func_proxy<
             client_proxy_base_type,
-            typename traits::remove_member_func_cv_noexcept<MemberFuncPtr>::type>;
+            typename util::traits::remove_member_func_cv_noexcept<MemberFuncPtr>::type>;
 	stripped_member_func_proxy(client_proxy_base_type* client, std::size_t member_func_id)
 		: base{client, member_func_id}
 	{}

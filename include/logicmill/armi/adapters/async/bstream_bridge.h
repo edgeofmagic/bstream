@@ -49,10 +49,10 @@ struct bridge<bstream::serialization_traits<StreamContext>, async::async_io_trai
 	using serialization_traits = logicmill::bstream::serialization_traits<StreamContext>;
 	using async_io_traits     = logicmill::async::async_io_traits;
 
-	using mutable_buffer_type       = logicmill::util::mutable_buffer;
-	using mutable_buffer_param_type = logicmill::util::mutable_buffer&&;
-	using const_buffer_type         = logicmill::util::const_buffer;
-	using const_buffer_param_type   = logicmill::util::const_buffer&&;
+	using mutable_buffer_type       = util::mutable_buffer;
+	using mutable_buffer_param_type = util::mutable_buffer&&;
+	using const_buffer_type         = util::const_buffer;
+	using const_buffer_param_type   = util::const_buffer&&;
 
 	using stream_context_type = StreamContext;
 

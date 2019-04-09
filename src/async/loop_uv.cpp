@@ -122,7 +122,7 @@ loop_uv::really_create_timer(std::error_code& err, timer::handler handler)
 		goto exit;
 	}
 
-	result = logicmill::util::make_shared<timer_uv>(m_uv_loop, err, std::move(handler));
+	result = util::make_shared<timer_uv>(m_uv_loop, err, std::move(handler));
 	result->init(result);
 	if (err)
 		goto exit;
@@ -148,7 +148,7 @@ loop_uv::really_create_timer_void(std::error_code& err, timer::void_handler hand
 		err = make_error_code(async::errc::loop_closed);
 		goto exit;
 	}
-	result = logicmill::util::make_shared<timer_uv>(
+	result = util::make_shared<timer_uv>(
 			m_uv_loop, err, [=, handler{std::move(handler)}](logicmill::async::timer::ptr) { handler(); });
 	result->init(result);
 	if (err)
@@ -308,7 +308,7 @@ acceptor::ptr
 loop_uv::really_create_acceptor(options const& opt, std::error_code& err, acceptor::connection_handler handler)
 {
 	err.clear();
-	logicmill::util::shared_ptr<tcp_acceptor_uv> acceptor;
+	util::shared_ptr<tcp_acceptor_uv> acceptor;
 
 	if (!handler)
 	{
@@ -322,7 +322,7 @@ loop_uv::really_create_acceptor(options const& opt, std::error_code& err, accept
 		goto exit;
 	}
 
-	acceptor = logicmill::util::make_shared<tcp_acceptor_uv>(opt.endpoint(), std::move(handler));
+	acceptor = util::make_shared<tcp_acceptor_uv>(opt.endpoint(), std::move(handler));
 	acceptor->init(m_uv_loop, acceptor, opt, err);
 exit:
 	return acceptor;
@@ -332,7 +332,7 @@ channel::ptr
 loop_uv::really_connect_channel(options const& opt, std::error_code& err, channel::connect_handler handler)
 {
 	err.clear();
-	logicmill::util::shared_ptr<tcp_channel_uv> cp;
+	util::shared_ptr<tcp_channel_uv> cp;
 
 	if (!handler)
 	{
@@ -348,11 +348,11 @@ loop_uv::really_connect_channel(options const& opt, std::error_code& err, channe
 
 	if (opt.framing())
 	{
-		cp = logicmill::util::make_shared<tcp_framed_channel_uv>();
+		cp = util::make_shared<tcp_framed_channel_uv>();
 	}
 	else
 	{
-		cp = logicmill::util::make_shared<tcp_channel_uv>();
+		cp = util::make_shared<tcp_channel_uv>();
 	}
 	cp->init(m_uv_loop, cp, err);
 	if (err)
@@ -374,7 +374,7 @@ loop_uv::setup_transceiver(options const& opts, std::error_code& err)
 		goto exit;
 	}
 
-	tp = logicmill::util::make_shared<udp_transceiver_uv>();
+	tp = util::make_shared<udp_transceiver_uv>();
 
 	tp->init(m_uv_loop, tp, err);
 	if (err)
@@ -414,7 +414,7 @@ transceiver::ptr
 loop_uv::really_create_transceiver(options const& opts, std::error_code& err)
 {
 	err.clear();
-	logicmill::util::shared_ptr<udp_transceiver_uv> tp;
+	util::shared_ptr<udp_transceiver_uv> tp;
 
 	tp = setup_transceiver(opts, err);
 	if (err)

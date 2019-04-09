@@ -26,7 +26,7 @@
 #define LOGICMILL_ARMI_SERVER_STUB_H
 
 #include <logicmill/armi/server_stub_base.h>
-#include <logicmill/traits.h>
+#include <util/traits.h>
 
 namespace logicmill
 {

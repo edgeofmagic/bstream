@@ -157,13 +157,13 @@ public:
 		return bstream::static_unique_ptr_cast<file::sink>(release_sink());
 	}
 
-	position_type
+	util::position_type
 	truncate(std::error_code& err)
 	{
 		return get_filebuf().truncate(err);
 	}
 
-	position_type
+	util::position_type
 	truncate()
 	{
 		return get_filebuf().truncate();

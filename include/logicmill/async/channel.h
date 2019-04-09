@@ -29,8 +29,8 @@
 #include <deque>
 #include <functional>
 #include <logicmill/async/endpoint.h>
-#include <logicmill/util/buffer.h>
-#include <logicmill/util/shared_ptr.h>
+#include <util/buffer.h>
+#include <util/shared_ptr.h>
 #include <memory>
 #include <system_error>
 

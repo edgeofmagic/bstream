@@ -26,7 +26,7 @@
 #define LOGICMILL_ARMI_REPLY_HANDLER_H
 
 #include <logicmill/armi/reply_handler_base.h>
-#include <logicmill/util/promise.h>
+#include <util/promise.h>
 
 namespace logicmill
 {

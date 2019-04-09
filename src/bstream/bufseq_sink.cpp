@@ -28,7 +28,7 @@ using namespace logicmill;
 using namespace bstream;
 
 void
-bufseq::sink::really_overflow(size_type n, std::error_code& err)
+bufseq::sink::really_overflow(util::size_type n, std::error_code& err)
 {
 	err.clear();
 	if (m_base == nullptr)
@@ -57,7 +57,7 @@ bufseq::sink::really_overflow(size_type n, std::error_code& err)
 }
 
 bool
-bufseq::sink::is_valid_position(position_type pos) const
+bufseq::sink::is_valid_position(util::position_type pos) const
 {
 	return pos >= 0;
 }
@@ -171,7 +171,7 @@ exit:
 }
 
 void
-bufseq::sink::locate(position_type pos, std::error_code& err)
+bufseq::sink::locate(util::position_type pos, std::error_code& err)
 {
 	err.clear();
 	assert(pos <= get_high_watermark());

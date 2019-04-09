@@ -27,7 +27,7 @@
 
 #include <logicmill/armi/member_func_stub_base.h>
 #include <logicmill/armi/server_stub_base.h>
-#include <logicmill/util/promise.h>
+#include <util/promise.h>
 
 namespace logicmill
 {

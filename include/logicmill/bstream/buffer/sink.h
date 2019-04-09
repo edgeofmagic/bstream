@@ -26,7 +26,7 @@
 #define LOGICMILL_BSTREAM_BUFFER_SINK_H
 
 #include <logicmill/bstream/sink.h>
-#include <logicmill/util/buffer.h>
+#include <util/buffer.h>
 
 #ifndef LOGICMILL_BSTREAM_MEMORY_DEFAULT_BUFFER_SIZE
 #define LOGICMILL_BSTREAM_MEMORY_DEFAULT_BUFFER_SIZE 16384UL
@@ -52,13 +52,13 @@ public:
 	friend class detail::sink_test_probe;
 
 	template<class _Alloc>
-	sink(size_type size, _Alloc&& alloc, byte_order order = byte_order::big_endian)
+	sink(util::size_type size, _Alloc&& alloc, byte_order order = byte_order::big_endian)
 		: base{order}, m_buf{size, std::forward<_Alloc>(alloc)}
 	{
 		reset_ptrs();
 	}
 
-	sink(size_type size, byte_order order = byte_order::big_endian) : base{order}, m_buf{size}
+	sink(util::size_type size, byte_order order = byte_order::big_endian) : base{order}, m_buf{size}
 	{
 		reset_ptrs();
 	}
@@ -96,18 +96,18 @@ public:
 
 protected:
 	virtual bool
-	is_valid_position(position_type pos) const override;
+	is_valid_position(util::position_type pos) const override;
 
 	virtual void
-	really_overflow(size_type, std::error_code& err) override;
+	really_overflow(util::size_type, std::error_code& err) override;
 
 	void
-	resize(size_type size, std::error_code& err);
+	resize(util::size_type size, std::error_code& err);
 
 	void
 	reset_ptrs()
 	{
-		byte_type* base = m_buf.data();
+		util::byte_type* base = m_buf.data();
 		set_ptrs(base, base, base + m_buf.capacity());
 	}
 

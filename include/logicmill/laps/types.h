@@ -28,7 +28,7 @@
 #include <deque>
 #include <logicmill/async/event_flow.h>
 #include <logicmill/bstream/bufseq/source.h>
-#include <logicmill/util/buffer.h>
+#include <util/buffer.h>
 #include <memory>
 
 namespace logicmill
@@ -147,7 +147,7 @@ public:
 	merge()
 	{
 		util::mutable_buffer result{m_size};
-		byte_type*           p{result.data()};
+		util::byte_type*           p{result.data()};
 		for (auto& buf : m_bufs)
 		{
 			::memcpy(p, buf.data(), buf.size());
@@ -198,7 +198,7 @@ public:
 	merge()
 	{
 		util::mutable_buffer result{m_size};
-		byte_type*           p{result.data()};
+		util::byte_type*           p{result.data()};
 		for (auto& buf : m_bufs)
 		{
 			::memcpy(p, buf.data(), buf.size());
@@ -274,7 +274,7 @@ public:
 	merge()
 	{
 		util::mutable_buffer result{m_size};
-		byte_type*           p{result.data()};
+		util::byte_type*           p{result.data()};
 		for (auto& buf : m_bufs)
 		{
 			::memcpy(p, buf.data(), buf.size());

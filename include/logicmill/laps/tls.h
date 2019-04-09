@@ -39,7 +39,7 @@
 #include <logicmill/async/loop.h>
 #include <logicmill/async/options.h>
 #include <logicmill/laps/types.h>
-#include <logicmill/util/shared_ptr.h>
+#include <util/shared_ptr.h>
 
 namespace logicmill
 {

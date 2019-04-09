@@ -47,13 +47,13 @@ public:
 		: bstream::detail::source_test_probe{target}, m_target{target}
 	{}
 
-	size_type
+	util::size_type
 	current_segment() const
 	{
 		return m_target.m_current;
 	}
 
-	std::vector<size_type> const&
+	std::vector<util::size_type> const&
 	offsets() const
 	{
 		return m_target.m_offsets;
@@ -68,7 +68,7 @@ class sink_test_probe : public bstream::detail::sink_test_probe
 public:
 	sink_test_probe(bufseq::sink& target) : bstream::detail::sink_test_probe{target}, m_target{target} {}
 
-	size_type
+	util::size_type
 	current_segnemt() const
 	{
 		return m_target.m_current;

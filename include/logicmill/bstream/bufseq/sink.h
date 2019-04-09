@@ -27,7 +27,7 @@
 
 #include <deque>
 #include <logicmill/bstream/sink.h>
-#include <logicmill/util/buffer.h>
+#include <util/buffer.h>
 
 #ifndef LOGICMILL_BSTREAM_MEMORY_DEFAULT_BUFFER_SIZE
 #define LOGICMILL_BSTREAM_MEMORY_DEFAULT_BUFFER_SIZE 16384UL
@@ -49,14 +49,14 @@ class sink : public bstream::sink
 {
 public:
 	using base          = bstream::sink;
-	using default_alloc = std::allocator<byte_type>;
+	using default_alloc = std::allocator<util::byte_type>;
 
 	using buffers = std::deque<util::mutable_buffer>;
 
 	friend class detail::sink_test_probe;
 
-	template<class _Alloc, class = typename std::enable_if_t<std::is_same<typename _Alloc::pointer, byte_type*>::value>>
-	sink(size_type size, _Alloc&& alloc, byte_order order = byte_order::big_endian)
+	template<class _Alloc, class = typename std::enable_if_t<std::is_same<typename _Alloc::pointer, util::byte_type*>::value>>
+	sink(util::size_type size, _Alloc&& alloc, byte_order order = byte_order::big_endian)
 		: base{order},
 		  m_segment_capacity{size},
 		  m_current{0},
@@ -67,7 +67,7 @@ public:
 		reset_ptrs();
 	}
 
-	template<class _Alloc, class = typename std::enable_if_t<std::is_same<typename _Alloc::pointer, byte_type*>::value>>
+	template<class _Alloc, class = typename std::enable_if_t<std::is_same<typename _Alloc::pointer, util::byte_type*>::value>>
 	sink(_Alloc&& alloc, byte_order order = byte_order::big_endian)
 		: base{order},
 		  m_segment_capacity{LOGICMILL_BSTREAM_MEMORY_DEFAULT_BUFFER_SIZE},
@@ -79,7 +79,7 @@ public:
 		reset_ptrs();
 	}
 
-	sink(size_type size, byte_order order = byte_order::big_endian)
+	sink(util::size_type size, byte_order order = byte_order::big_endian)
 		: base{order},
 		  m_segment_capacity{size},
 		  m_current{0},
@@ -128,27 +128,27 @@ protected:
 	set_size();
 
 	void
-	locate(position_type pos, std::error_code& err);
+	locate(util::position_type pos, std::error_code& err);
 
 	virtual bool
-	is_valid_position(position_type pos) const override;
+	is_valid_position(util::position_type pos) const override;
 
 	virtual void
 	really_jump(std::error_code& err) override;
 
 	virtual void
-	really_overflow(size_type, std::error_code& err) override;
+	really_overflow(util::size_type, std::error_code& err) override;
 
 	void
 	reset_ptrs()
 	{
 		m_base_offset   = m_current * m_segment_capacity;
-		byte_type* base = m_bufs[m_current].data();
+		util::byte_type* base = m_bufs[m_current].data();
 		set_ptrs(base, base, base + m_segment_capacity);
 	}
 
-	size_type                                     m_segment_capacity;    // capacity of individual buffers
-	size_type                                     m_current;             // index of current buffer
+	util::size_type                                     m_segment_capacity;    // capacity of individual buffers
+	util::size_type                                     m_current;             // index of current buffer
 	buffers                                       m_bufs;
 	std::unique_ptr<util::mutable_buffer_factory> m_factory;
 };

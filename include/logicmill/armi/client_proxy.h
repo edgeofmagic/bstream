@@ -26,7 +26,7 @@
 #define LOGICMILL_ARMI_CLIENT_PROXY_H
 
 #include <logicmill/armi/client_proxy_base.h>
-#include <logicmill/traits.h>
+#include <util/traits.h>
 
 namespace logicmill
 {
