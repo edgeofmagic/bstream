@@ -1,0 +1,69 @@
+
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Test All",
+            "type": "process",
+            "command": "./bstream_test",
+            "args": [
+            ],
+            "group": "test",
+            "options": 
+            {
+				"cwd": "${workspaceFolder}/build",
+				"env": {
+					"ASAN_OPTIONS" : "detect_leaks=1"
+				}
+            },
+            "presentation": 
+            {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Test Bstream",
+            "type": "process",
+            "command": "./bstream_test",
+            "args": [
+				"--test-case=*bstream*"
+            ],
+            "group": "test",
+            "options": 
+            {
+				"cwd": "${workspaceFolder}/build",
+				"env": {
+					"ASAN_OPTIONS" : "detect_leaks=1"
+				}
+            },
+            "presentation": 
+            {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+            "problemMatcher": []
+		},
+    	{
+            "label": "Build Doxygen Docs",
+            "type": "process",
+            "command": "make",
+            "args": [
+				"bstream_doc"
+            ],
+            "group": "build",
+            "options": 
+            {
+				"cwd": "${workspaceFolder}/build"
+            },
+            "presentation": 
+            {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+            "problemMatcher": []
+        }    ]
+}

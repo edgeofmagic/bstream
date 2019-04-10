@@ -38,10 +38,8 @@
 .LSOverride
 
 build/
-.vscode/
+.vscode/ipch/
 
 # test output
 fbstream_test_file
 filebuftest
-
-bstream.code-workspace
