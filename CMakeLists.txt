@@ -6,6 +6,8 @@ set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
 message(STATUS "CMAKE_HOME_DIRECTORY = ${CMAKE_HOME_DIRECTORY}")
 
+# set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/scripts")
+
 	if (CMAKE_BUILD_TYPE STREQUAL "Debug")
 		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
 #	else()
@@ -14,7 +16,9 @@ message(STATUS "CMAKE_HOME_DIRECTORY = ${CMAKE_HOME_DIRECTORY}")
 
 enable_testing()
 
-add_subdirectory( ext/util )
+include(scripts/doutil.cmake)
+
+# add_subdirectory( ext/util )
 
 # INCLUDE_DIRECTORIES(/Users/dcurtis/botan-install/include/botan-2)
 # LINK_DIRECTORIES(/Users/dcurtis/botan-install/lib)
@@ -22,7 +26,8 @@ add_subdirectory( ext/util )
 include_directories( 
 	include 
 	ext/boost 
-	ext/util/include
+#	ext/util/include
+	${util_SOURCE_DIR}/include
 	ext/doctest/include)
 
 set(BSTREAM_SRCS
