@@ -1,6 +1,5 @@
 
 Todo:
-☐ Add uniform clear() to ombstream, buffer sinks and serialization traits
-☐ Put try/catch around serialize/deserialize attempts in stubs/proxies
-☐ Examine references/pointers in lambdas, consider using shared pointers
+☐ fix configurability of allocator, default size, etc. (see context.h)
+
 

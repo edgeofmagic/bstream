@@ -201,7 +201,7 @@ public:
 	use(std::deque<util::shared_buffer>&& bufs);
 
 	void
-	use(std::deque<util::shared_buffer> const& bufs);    // TODO: here
+	use(std::deque<util::shared_buffer> const& bufs); 
 
 	void
 	use(util::mutable_buffer&& buf)
