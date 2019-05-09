@@ -18,11 +18,6 @@ enable_testing()
 
 include(scripts/doutil.cmake)
 
-# add_subdirectory( ext/util )
-
-# INCLUDE_DIRECTORIES(/Users/dcurtis/botan-install/include/botan-2)
-# LINK_DIRECTORIES(/Users/dcurtis/botan-install/lib)
-
 include_directories( 
 	include 
 	ext/boost 
@@ -31,46 +26,6 @@ include_directories(
 	ext/doctest/include)
 
 set(BSTREAM_SRCS
-	include/bstream.h
-	include/bstream/base_classes.h
-	include/bstream/context.h
-	include/bstream/error.h
-	include/bstream/error_category_context.h
-	include/bstream/fwd_decls.h
-	include/bstream/ibstream.h
-	include/bstream/ibstream_traits.h
-	include/bstream/ifbstream.h
-	include/bstream/imbstream.h
-	include/bstream/macros.h
-	include/bstream/msgpack.h
-	include/bstream/obstream.h
-	include/bstream/obstream_traits.h
-	include/bstream/ofbstream.h
-	include/bstream/ombstream.h
-	include/bstream/stdlib.h
-	include/bstream/typecode.h
-	include/bstream/types.h
-	include/bstream/source.h
-	include/bstream/sink.h
-#	include/bstream/seq_sink.h
-	include/bstream/file/source.h
-	include/bstream/file/sink.h
-	include/bstream/buffer/source.h
-	include/bstream/buffer/sink.h
-	include/bstream/bufseq/sink.h
-	include/bstream/stdlib/chrono.h
-	include/bstream/stdlib/deque.h
-	include/bstream/stdlib/forward_list.h
-	include/bstream/stdlib/list.h
-	include/bstream/stdlib/map.h
-	include/bstream/stdlib/pair.h
-	include/bstream/stdlib/set.h
-	include/bstream/stdlib/tuple.h
-	include/bstream/stdlib/unordered_map.h
-	include/bstream/stdlib/unordered_set.h
-	include/bstream/stdlib/vector.h
-	include/bstream/memory.h
-
 	src/bstream/error.cpp
 	src/bstream/error_category_context.cpp
 	src/bstream/ibstream.cpp
@@ -101,10 +56,9 @@ add_library(bstream ${BSTREAM_SRCS})
 add_executable(bstream_test ${BSTREAM_TEST_SRCS})
 target_link_libraries(bstream_test bstream util)
 
-#add_test(NAME test_bstream COMMAND bstream_test --test-case=*bstream*)
-#add_test(NAME test_async COMMAND bstream_test --test-case=*async*)
-
 add_test(NAME bstream_test COMMAND bstream_test )
+SET_TESTS_PROPERTIES(bstream_test
+    PROPERTIES ENVIRONMENT "ASAN_OPTIONS=detect_leaks=1")
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
