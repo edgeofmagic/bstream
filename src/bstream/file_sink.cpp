@@ -128,7 +128,6 @@ file::sink::open(std::string const& filename)
 void
 file::sink::open(std::string const& filename, std::error_code& err)
 {
-	err.clear();
 	m_filename = filename;
 	really_open(err);
 }

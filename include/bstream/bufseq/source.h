@@ -736,6 +736,7 @@ template<>
 inline std::deque<util::shared_buffer>
 source<util::const_buffer>::get_segmented_slice(util::size_type n, std::error_code& err)
 {
+	err.clear();
 	std::deque<util::shared_buffer> result;
 	result.emplace_back(util::shared_buffer{base::get_slice(n, err)});
 	return result;
