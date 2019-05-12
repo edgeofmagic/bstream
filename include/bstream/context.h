@@ -27,6 +27,7 @@
 
 #include <boost/endian/conversion.hpp>
 #include <bstream/error.h>
+#include <util/error.h>
 #include <util/error_context.h>
 #include <bstream/ibstream_traits.h>
 #include <bstream/types.h>
@@ -45,7 +46,7 @@ public:
 	friend class context_base;
 
 	context_options()
-		: m_categories{&std::system_category(), &std::generic_category(), &bstream::error_category()},
+		: m_categories{&std::system_category(), &std::generic_category(), &bstream::error_category(), &util::error_category()},
 		  m_dedup{true},
 		  m_byte_order{byte_order::big_endian},
 		  m_buf_size{65536UL}

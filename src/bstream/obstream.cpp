@@ -23,6 +23,7 @@
  */
 
 #include <bstream/obstream.h>
+#include <util/error.h>
 
 using namespace bstream;
 
@@ -363,10 +364,10 @@ obstream::write_error_code(std::error_code const& ecode)
 	}
 	catch (std::system_error const& e)
 	{
-		assert(e.code() == bstream::errc::invalid_err_category);
+		assert(e.code() == util::errc::invalid_error_category);
 		write_array_header(2);
-		*this << m_context.index_of_category(bstream::error_category());    // guaranteed to be there
-		*this << static_cast<int>(bstream::errc::invalid_err_category);
+		*this << m_context.index_of_category(util::error_category());    // guaranteed to be there
+		*this << static_cast<int>(util::errc::invalid_error_category);
 	}
 	return *this;
 }
