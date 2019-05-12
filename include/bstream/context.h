@@ -27,7 +27,7 @@
 
 #include <boost/endian/conversion.hpp>
 #include <bstream/error.h>
-#include <bstream/error_category_context.h>
+#include <util/error_context.h>
 #include <bstream/ibstream_traits.h>
 #include <bstream/types.h>
 #include <util/buffer.h>
@@ -81,7 +81,7 @@ private:
 };
 
 
-class context_base : public error_category_context
+class context_base : public util::error_context
 {
 public:
 	// using ptr = util::shared_ptr<context_base>;
@@ -93,21 +93,21 @@ public:
 	};
 
 	context_base(context_options&& opts)
-		: error_category_context{std::move(opts.m_categories)},
+		: util::error_context{std::move(opts.m_categories)},
 		  m_dedup_shared_ptrs{opts.m_dedup},
 		  m_byte_order{opts.m_byte_order},
 		  m_buffer_size{opts.m_buf_size}
 	{}
 
 	context_base(context_options const& opts)
-		: error_category_context{opts.m_categories},
+		: util::error_context{opts.m_categories},
 		  m_dedup_shared_ptrs{opts.m_dedup},
 		  m_byte_order{opts.m_byte_order},
 		  m_buffer_size{opts.m_buf_size}
 	{}
 
 	context_base(bool dedup_shared_ptrs, byte_order order, util::size_type buffer_size = 65536)
-		: error_category_context{},
+		: util::error_context{},
 		  m_dedup_shared_ptrs{dedup_shared_ptrs},
 		  m_byte_order{order},
 		  m_buffer_size{buffer_size}

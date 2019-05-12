@@ -615,8 +615,8 @@ ibstream::read_error_code()
 	{
 		throw std::system_error{make_error_code(bstream::errc::invalid_header_for_error_code)};
 	}
-	auto category_index = read_as<error_category_context::index_type>();
-	auto value          = read_as<error_category_context::index_type>();
+	auto category_index = read_as<util::error_context::index_type>();
+	auto value          = read_as<util::error_context::index_type>();
 
 	std::error_code result;
 

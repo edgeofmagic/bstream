@@ -26,7 +26,6 @@ include_directories(
 
 set(BSTREAM_SRCS
 	src/bstream/error.cpp
-	src/bstream/error_category_context.cpp
 	src/bstream/ibstream.cpp
 	src/bstream/obstream.cpp
 	src/bstream/source.cpp
