@@ -27,6 +27,7 @@
 
 #include <bstream/ibstream.h>
 #include <bstream/obstream.h>
+#include <bstream/stdlib/pair.h>
 #include <unordered_map>
 
 
