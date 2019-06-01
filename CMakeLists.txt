@@ -20,7 +20,8 @@ include(scripts/doutil.cmake)
 
 include_directories( 
 	include 
-	ext/boost 
+#	ext/boost
+	${CMAKE_HOME_DIRECTORY}/../boost_1_66_0
 	${util_SOURCE_DIR}/include
 	ext/doctest/include)
 
