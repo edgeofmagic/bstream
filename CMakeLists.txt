@@ -30,8 +30,6 @@ include(scripts/doutil.cmake)
 
 include_directories( 
 	include 
-#	ext/boost
-#	${CMAKE_HOME_DIRECTORY}/../boost_1_66_0
 	${Boost_INCLUDE_DIRS}
 	${CMAKE_HOME_DIRECTORY}/../filesystem/include
 	${util_SOURCE_DIR}/include
@@ -65,8 +63,7 @@ set(BSTREAM_TEST_SRCS
 add_library(bstream ${BSTREAM_SRCS})
 
 add_executable(bstream_test ${BSTREAM_TEST_SRCS})
-# target_link_libraries(bstream_test bstream util ${Boost_LIBRARIES})
-target_link_libraries(bstream_test bstream util ${Boost_LIBRARIES})
+target_link_libraries(bstream_test bstream ${Boost_LIBRARIES})
 
 add_test(NAME bstream_test COMMAND bstream_test )
 SET_TESTS_PROPERTIES(bstream_test
