@@ -9,6 +9,7 @@ message(STATUS "CMAKE_HOME_DIRECTORY = ${CMAKE_HOME_DIRECTORY}")
 # set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/scripts")
 
 	if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+		set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -fsanitize=address")
 		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
 #	else()
 #		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O3")
@@ -16,12 +17,23 @@ message(STATUS "CMAKE_HOME_DIRECTORY = ${CMAKE_HOME_DIRECTORY}")
 
 enable_testing()
 
+set(Boost_USE_STATIC_LIBS   ON)
+
+set(Boost_NO_SYSTEM_PATHS TRUE)
+if (Boost_NO_SYSTEM_PATHS)
+	set(BOOST_ROOT "${CMAKE_HOME_DIRECTORY}/../boost_1_68_0_install")
+endif (Boost_NO_SYSTEM_PATHS)
+
+find_package(Boost 1.68.0 REQUIRED system)
+
 include(scripts/doutil.cmake)
 
 include_directories( 
 	include 
 #	ext/boost
-	${CMAKE_HOME_DIRECTORY}/../boost_1_66_0
+#	${CMAKE_HOME_DIRECTORY}/../boost_1_66_0
+	${Boost_INCLUDE_DIRS}
+	${CMAKE_HOME_DIRECTORY}/../filesystem/include
 	${util_SOURCE_DIR}/include
 	ext/doctest/include)
 
@@ -53,7 +65,8 @@ set(BSTREAM_TEST_SRCS
 add_library(bstream ${BSTREAM_SRCS})
 
 add_executable(bstream_test ${BSTREAM_TEST_SRCS})
-target_link_libraries(bstream_test bstream util)
+# target_link_libraries(bstream_test bstream util ${Boost_LIBRARIES})
+target_link_libraries(bstream_test bstream util ${Boost_LIBRARIES})
 
 add_test(NAME bstream_test COMMAND bstream_test )
 SET_TESTS_PROPERTIES(bstream_test

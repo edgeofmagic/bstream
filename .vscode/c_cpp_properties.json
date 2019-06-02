@@ -3,8 +3,16 @@
         {
             "name": "Mac",
             "includePath": [
-                "${workspaceFolder}/**"
+				"${workspaceFolder}/**",
+				"${workspaceFolder}/../filesystem/include"				
             ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": false,
+                "path": [
+                    "${workspaceFolder}/**",
+                    "${workspaceFolder}/../filesystem/include"
+                ]
+            },
             "defines": [],
             "macFrameworkPath": [
                 "/System/Library/Frameworks",

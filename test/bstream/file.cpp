@@ -25,12 +25,15 @@
 #include "test_probes/file.h"
 #include "common.h"
 #include <doctest.h>
-#include <experimental/filesystem>
+// #include <experimental/filesystem>
+#include <ghc/filesystem.hpp>
 #include <bstream/error.h>
 
 using namespace bstream;
 
-namespace fs = std::experimental::filesystem;
+// namespace fs = std::experimental::filesystem;
+
+namespace fs = ghc::filesystem;
 
 TEST_CASE("bstream::file::source [ smoke ] { source seek read }")
 {
