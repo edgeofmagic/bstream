@@ -1,3 +1,7 @@
 [submodule "ext/util"]
 	path = ext/util
 	url = https://github.com/edgeofmagic/util.git
+[submodule "ext/filesystem"]
+	path = ext/filesystem
+	url = https://github.com/gulrak/filesystem.git
+	branch = master

@@ -28,10 +28,13 @@ find_package(Boost 1.68.0 REQUIRED system)
 
 include(scripts/doutil.cmake)
 
+add_subdirectory( ext/filesystem EXCLUDE_FROM_ALL)
+
 include_directories( 
 	include 
 	${Boost_INCLUDE_DIRS}
-	${CMAKE_HOME_DIRECTORY}/../filesystem/include
+#	${CMAKE_HOME_DIRECTORY}/../filesystem/include
+	ext/filesystem/include
 	${util_SOURCE_DIR}/include
 	ext/doctest/include)
 
