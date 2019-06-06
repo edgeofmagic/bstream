@@ -17,8 +17,6 @@ message(STATUS "CMAKE_HOME_DIRECTORY = ${CMAKE_HOME_DIRECTORY}")
 
 enable_testing()
 
-set(Boost_USE_STATIC_LIBS   ON)
-
 set(Boost_NO_SYSTEM_PATHS TRUE)
 if (Boost_NO_SYSTEM_PATHS)
 	set(BOOST_ROOT "${CMAKE_HOME_DIRECTORY}/../boost_1_68_0_install")
@@ -33,7 +31,6 @@ add_subdirectory( ext/filesystem EXCLUDE_FROM_ALL)
 include_directories( 
 	include 
 	${Boost_INCLUDE_DIRS}
-#	${CMAKE_HOME_DIRECTORY}/../filesystem/include
 	ext/filesystem/include
 	${util_SOURCE_DIR}/include
 	ext/doctest/include)
@@ -66,7 +63,7 @@ set(BSTREAM_TEST_SRCS
 add_library(bstream ${BSTREAM_SRCS})
 
 add_executable(bstream_test ${BSTREAM_TEST_SRCS})
-target_link_libraries(bstream_test bstream ${Boost_LIBRARIES})
+target_link_libraries(bstream_test bstream)
 
 add_test(NAME bstream_test COMMAND bstream_test )
 SET_TESTS_PROPERTIES(bstream_test
